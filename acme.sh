@@ -7,8 +7,8 @@ SSL='/ssl'
 install_acme(){
   echo -e "${RED}Acme脚本将安装在用户家目录$END"
   cd $DIR
-  curl https://get.acme.sh | sh -s email=my@example.com &&
-  echo -e "${GREEN}安装成功$END" || echo -e "${RED}安装失败$END"
+  curl https://get.acme.sh | sh
+  [ -d $DIR/.acme.sh ] && echo -e "${GREEN}安装成功$END" || echo -e "${RED}安装失败$END"
 }
 change_ca(){
   echo -e "CA提供商如下：
