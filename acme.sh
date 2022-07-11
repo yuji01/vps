@@ -40,11 +40,28 @@ register_acme(){
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone &&
   echo -e "${GREEN}域名：$input 的证书申请成功$END" ||
   echo -e "${RED}域名：$input 的证书申请失败$END"
-  [ -e $SSL/$input ] || mkdir -p $SSL/$input
-  ~/.acme.sh/acme.sh --installcert -d $input --fullchain-file $SSL/$input/cret.crt --key-file $SSL/$input/private.key
+  [ -d $SSL/$input ] || mkdir -p $SSL/$input
+  $DIR/.acme.sh/acme.sh --installcert -d $input --fullchain-file $SSL/$input/cret.crt --key-file $SSL/$input/private.key
   echo -e "证书安装路径：
   证书公钥路径：${GREEN}$SSL/$input/cret.crt$END
   证书私钥路径：${RED}$SSL/$input/private.key$END
+  "
+}
+cf_api(){
+  echo -e "${RED}请确保cloudflare的API令牌是生效的$END"
+  read -p "请输入cloudflare的邮箱：" input
+  export CF_Email="$input"
+  read -p "请输入对应cloudflare邮箱的API：" input
+  export CF_Key="$input"
+  read -p "请输入你要申请的域名：" domain
+  $DIR/.acme.sh/acme.sh --issue --dns dns_cf -d $domain -d *.$domain -k ec-256 &&
+  echo -e "${GREEN}域名：$domain 的证书申请成功$END" ||
+  echo -e "${RED}域名：$domain 的证书申请失败$END"
+  [ -d $SSL/$domain ] || mkdir -p $SSL/$domain
+  $DIR/.acme.sh/acme.sh --installcert -d $domain -d *.$domain --fullchainpath $SSL/$domain/$domain.crt --keypath $SSL/$domain/$domain.key –ecc
+  echo -e "证书安装路径：
+  证书公钥路径：${GREEN}$SSL/$domain/$domain.crt$END
+  证书私钥路径：${RED}$SSL/$domain/$domain.key$END
   "
 }
 update_acme(){
@@ -58,7 +75,8 @@ while :;do
   2 -- 改变 CA 提供商
   3 -- 注册 Acme 账号
   4 -- 使用 80 端口申请证书
-  5 -- 设置 Acme 自动更新$END"
+  5 -- 使用cloudflare API 申请泛域名证书
+  6 -- 设置 Acme 自动更新$END"
   read -n 1 -p "请选择：" menu
   case $menu in
     0)
@@ -82,6 +100,10 @@ while :;do
       80_acme
     ;;
     5)
+      echo
+      cf_api
+    ;;
+    6)
       echo
       update_acme
     ;;
