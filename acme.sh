@@ -1,6 +1,7 @@
 #!/bin/bash
 RED="\e[1;31m"
 GREEN="\e[1;32m"
+OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
 DIR=`pwd ~`
 SSL='/ssl'
@@ -51,13 +52,13 @@ update_acme(){
 }
 
 while :;do
-  echo -e "功能如下：
+  echo -e "$OTHER功能如下：
   0 -- 退出脚本
   1 -- 安装 Acme 脚本
   2 -- 改变 CA 提供商
   3 -- 注册 Acme 账号
   4 -- 使用 80 端口申请证书
-  5 -- 设置 Acme 自动更新"
+  5 -- 设置 Acme 自动更新$END"
   read -n 1 -p "请选择：" menu
   case $menu in
     0)
