@@ -41,7 +41,7 @@ register_acme(){
   echo -e "${GREEN}域名：$input 的证书申请成功$END" ||
   echo -e "${RED}域名：$input 的证书申请失败$END"
   [ -d $SSL/$input ] || mkdir -p $SSL/$input
-  $DIR/.acme.sh/acme.sh --installcert -d $input --fullchain-file $SSL/$input/cret.crt --key-file $SSL/$input/private.key
+  $DIR/.acme.sh/acme.sh --installcert -d $input --fullchain-file $SSL/$input/cret.crt --key-file $SSL/$input/private.key &&
   echo -e "证书安装路径：
   证书公钥路径：${GREEN}$SSL/$input/cret.crt$END
   证书私钥路径：${RED}$SSL/$input/private.key$END
@@ -54,11 +54,12 @@ cf_api(){
   read -p "请输入对应cloudflare邮箱的Global API Key：" input
   export CF_Key="$input"
   read -p "请输入你要申请的域名：" domain
-  $DIR/.acme.sh/acme.sh --issue --dns dns_cf -d $domain -d *.$domain -k ec-256 &&
+  ~/.acme.sh/acme.sh --issue --dns dns_cf -d 域名 -d *.域名 -k ec-256
+  $DIR/.acme.sh/acme.sh --issue --dns dns_cf -d ${domain} -d *.${domain} -k ec-256 &&
   echo -e "${GREEN}域名：$domain 的证书申请成功$END" ||
   echo -e "${RED}域名：$domain 的证书申请失败$END"
   [ -d $SSL/$domain ] || mkdir -p $SSL/$domain
-  $DIR/.acme.sh/acme.sh --installcert -d $domain -d *.$domain --fullchainpath $SSL/$domain/$domain.crt --keypath $SSL/$domain/$domain.key –ecc
+  $DIR/.acme.sh/acme.sh --installcert -d $domain -d *.${domain} --fullchainpath $SSL/$domain/$domain.crt --keypath $SSL/$domain/$domain.key –ecc &&
   echo -e "证书安装路径：
   证书公钥路径：${GREEN}$SSL/$domain/$domain.crt$END
   证书私钥路径：${RED}$SSL/$domain/$domain.key$END
