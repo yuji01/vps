@@ -41,13 +41,17 @@ register_acme(){
   ${RED}请确保80端口没有被占用$END"
   read -p "请输入域名：" input
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone &&
-  echo -e "${GREEN}域名：$input的证书申请成功$END" ||
-  echo -e "${RED}域名：$input的证书申请失败$END"
+  echo -e "${GREEN}域名：$input 的证书申请成功$END" ||
+  echo -e "${RED}域名：$input 的证书申请失败$END"
   [ -e $SSL/$input ] || mkdir -p $SSL/$input
   ~/.acme.sh/acme.sh --installcert -d $input --fullchain-file $SSL/$input/cret.crt --key-file $SSL/$input/private.key
+  echo -e "证书安装路径：
+  证书公钥路径：${GREEN}$SSL/$input/cret.crt$END
+  证书私钥路径：${RED}$SSL/$input/private.key$END
+  "
 }
 update_acme(){
-  $DIR/.acme.sh/acme.sh  --upgrade  --auto-upgrade && echo "自动更新设置完成"
+  $DIR/.acme.sh/acme.sh  --upgrade  --auto-upgrade && echo -e "${GREEN}自动更新设置完成$END"
 }
 
 while :;do
