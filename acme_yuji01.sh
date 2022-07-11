@@ -56,11 +56,11 @@ cf_api(){
   read -p "请输入cloudflare的邮箱：" email
   export CF_Email="$email"
   read -p "请输入你要申请的域名：" domain
-  $DIR/.acme.sh/acme.sh --issue --dns dns_cf -d $domain -d *.$domain -k ec-256
+  $DIR/.acme.sh/acme.sh --issue -d "$domain" -d "*.$domain" --dns dns_cf
   if [ $? -eq 0 ];then
     echo -e "${GREEN}域名：$domain 的证书申请成功$END" 
     [ -d $SSL/$domain ] || mkdir -p $SSL/$domain
-    $DIR/.acme.sh/acme.sh --installcert -d $domain -d *.${domain} --fullchainpath $SSL/$domain/$domain.crt --keypath $SSL/$domain/$domain.key –ecc &&
+    $DIR/.acme.sh/acme.sh --installcert -d $domain -d *.$domain --fullchainpath $SSL/$domain/$domain.crt --keypath $SSL/$domain/$domain.key –ecc &&
   echo -e "证书安装路径：
   证书公钥路径：${GREEN}$SSL/$domain/$domain.crt$END
   证书私钥路径：${RED}$SSL/$domain/$domain.key$END"
