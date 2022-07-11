@@ -11,9 +11,10 @@ install_acme(){
   echo -e "${GREEN}安装成功$END" || echo -e "${RED}安装失败$END"
 }
 change_ca(){
-  echo -e "1  ---  Let's Encrypt
-           2  ---  ZeroSSL"
-  read -p "请输入数字：" input
+  echo -e "CA提供商如下：
+  1  ---  Let's Encrypt
+  2  ---  ZeroSSL"
+  read -n 1 -p "请输入数字：" input
   case $input in
     1)
       $DIR/.acme.sh/acme.sh --set-default-ca --server letsencrypt &&
@@ -53,7 +54,7 @@ while :;do
   3 -- 注册 Acme 账号
   4 -- 使用 80 端口申请证书
   5 -- 设置 Acme 自动更新"
-  read -p "请选择：" menu
+  read -n 1 -p "请选择：" menu
   case $menu in
     0)
       break
