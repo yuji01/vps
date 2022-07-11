@@ -48,10 +48,10 @@ register_acme(){
   "
 }
 cf_api(){
-  echo -e "${RED}请确保cloudflare的API令牌是生效的$END"
+  echo -e "${RED}请确保cloudflare的Global API Key是生效的$END"
   read -p "请输入cloudflare的邮箱：" input
   export CF_Email="$input"
-  read -p "请输入对应cloudflare邮箱的API：" input
+  read -p "请输入对应cloudflare邮箱的Global API Key：" input
   export CF_Key="$input"
   read -p "请输入你要申请的域名：" domain
   $DIR/.acme.sh/acme.sh --issue --dns dns_cf -d $domain -d *.$domain -k ec-256 &&
