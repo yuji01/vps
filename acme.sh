@@ -53,8 +53,10 @@ cf_api(){
   echo -e "${RED}请确保cloudflare的Global API Key是生效的$END"
   read -p "请输入cloudflare的Global API Key：" api
   export CF_Key="$api"
+  echo "你输入的Global API Key为：$CF_Key"
   read -p "请输入cloudflare的邮箱：" email
   export CF_Email="$email"
+  echo "你输入的cloudflare邮箱为：$CF_Email"
   read -p "请输入你要申请的域名：" domain
   $DIR/.acme.sh/acme.sh --issue --dns dns_cf -d ${domain} -d *.${domain} -k ec-256 &&
   if [ $? -eq 0 ];then
