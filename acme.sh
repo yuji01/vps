@@ -5,15 +5,13 @@ END="\e[0m"
 DIR=`pwd ~`
 SSL='/ssl'
 install_acme(){
-  echo -e "
-  ${RED}Acme脚本将安装在用户家目录$END"
+  echo -e "${RED}Acme脚本将安装在用户家目录$END"
   cd $DIR
   curl https://get.acme.sh | sh
   [ -d $DIR/.acme.sh ] && echo -e "${GREEN}安装成功$END" || echo -e "${RED}安装失败$END"
 }
 change_ca(){
-  echo -e "
-  CA提供商如下：
+  echo -e "CA提供商如下：
   1  ---  Let's Encrypt
   2  ---  ZeroSSL"
   read -n 1 -p "请输入数字：" input
@@ -31,14 +29,12 @@ change_ca(){
   esac
 }
 register_acme(){
-  echo
   read -p "请输入你的Email地址：" input
   $DIR/.acme.sh/acme.sh --register-account -m $input &&
   echo -e "${GREEN}注册成功$END" || echo -e "${RED}注册失败$END"
 }
 80_acme(){
-  echo -e "
-  ${RED}请确保80端口没有被占用$END"
+  echo -e "${RED}请确保80端口没有被占用$END"
   read -p "请输入域名：" input
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone &&
   echo -e "${GREEN}域名：$input 的证书申请成功$END" ||
@@ -65,24 +61,31 @@ while :;do
   read -n 1 -p "请选择：" menu
   case $menu in
     0)
+      echo
       break
     ;;
     1)
+      echo
       install_acme
     ;;
     2)
+      echo
       change_ca
     ;;
     3)
+      echo
       register_acme
     ;;
     4)
+      echo
       80_acme
     ;;
     5)
+      echo
       update_acme
     ;;
     *)
+      echo
       echo -e "${RED}请重新输入$END"
   esac
 done
