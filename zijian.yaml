@@ -1,30 +1,4 @@
 proxies:
-  - name: 🇯🇵 东京-8.23过期
-    type: trojan
-    server: blog.yuji2022.gq
-    port: 443
-    password: E2476fkfm415641EqPr7st9
-    network: ws
-    ws-opts:
-      path: /yuji2022yyds2
-      headers:
-        Host: blog.yuji2022.gq
-    sni: blog.yuji2022.gq
-    mux: true
-    udp: true
-  - name: 🇭🇰 香港-8.23过期
-    type: trojan
-    server: blog.yuji2022.ga
-    port: 443
-    password: 9E2476fkfm415641EqPr7st
-    network: ws
-    ws-opts:
-      path: /yuji2022yyds3
-      headers:
-        Host: blog.yuji2022.ga
-    sni: blog.yuji2022.ga
-    mux: true
-    udp: true
   - name: 🇺🇸 洛杉矶-6.14过期
     type: trojan
     server: blog.yuji2022.ml
@@ -37,17 +11,3 @@ proxies:
         Host: blog.yuji2022.ml
     sni: blog.yuji2022.ml
     mux: true
-    udp: true
-  - name: 🇹🇼 台湾-8.23过期
-    type: trojan
-    server: blog.yj2022.tk
-    port: 443
-    password: E2476fkfm415641EqPr7st
-    network: ws
-    ws-opts:
-      path: /yj2022yyds
-      headers:
-        Host: blog.yj2022.tk
-    sni: blog.yj2022.tk
-    mux: true
-    udp: true
