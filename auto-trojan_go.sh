@@ -3,7 +3,7 @@ os_check(){
 echo "安装相关软件包"
 if [ `lsb_release -a|grep -e "[Dd]ebian"` != ''  -o `lsb_release -a|grep -e "[Uu]buntu"` != '' ];then
 apt update && apt install socat curl wget libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev
-elif [[ `lsb_release -a|grep -e "[Cc]entos"` != '' ]];then
+elif [[ `cat /etc/redhat-release` != '' ]];then
 yum update && yum install socat curl wget gcc-c++ zlib zlib-devel pcre pcre-devel openssl openssl-devel
 else
 echo "不支持的系统"
