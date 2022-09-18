@@ -2,7 +2,7 @@
 os_check(){
 echo "安装相关软件包"
 if [ `lsb_release -a|grep -e "[Dd]ebian"` != ''  -o `lsb_release -a|grep -e "[Uu]buntu"` != '' ];then
-apt update && apt install socat curl wget libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev unzip
+apt update && apt install socat curl wget libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev unzip ufw
 elif [[ `cat /etc/redhat-release` != '' ]];then
 yum update && yum install socat curl wget gcc-c++ zlib zlib-devel pcre pcre-devel openssl openssl-devel unzip
 else
@@ -243,9 +243,8 @@ cat << EOF
 EOF
 ) > /usr/local/trojan-go/server.json
 PASSWORD="`date "+%Y%m%d%H%M%S"`yjbzl$RANDOM"
+sed -i "s/trojan.yuji2022.com/$TROJAN_GO/g" /usr/local/trojan-go/server.json
 sed -i "s/yujibuzailai/$PASSWORD/g" /usr/local/trojan-go/server.json
-sed -i "s@/ssl/trojan.yuji2022.com/cret.crt@/ssl/$TROJAN_GO/cret.crt@g" /usr/local/trojan-go/server.json
-sed -i "s@/ssl/trojan.yuji2022.com/private.key@/ssl/$TROJAN_GO/private.key@g" /usr/local/trojan-go/server.json
 PATH_Trojan="`date "+%Y%m%d%H%M%S"`yuji2022$RANDOM"
 sed -i "s@yuji2022path@$PATH_Trojan@g" /usr/local/trojan-go/server.json
 #创建启动脚本
