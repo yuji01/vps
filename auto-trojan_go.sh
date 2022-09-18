@@ -1,28 +1,26 @@
 #!/bin/bash
+read -e -p "请输入Web域名：" WEB
+read -e -p "请输入Trojan-go域名：" TROJAN_GO
 os_check(){
-echo "安装相关软件包"
-if [ `lsb_release -a|grep -e "[Dd]ebian"` != ''  -o `lsb_release -a|grep -e "[Uu]buntu"` != '' ];then
-apt update && apt install socat curl wget libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev unzip ufw
-elif [[ `cat /etc/redhat-release` != '' ]];then
-yum update && yum install socat curl wget gcc-c++ zlib zlib-devel pcre pcre-devel openssl openssl-devel unzip
+[ -e /etc/redhat-release ] && OS=centos || OS=other
+if [[ $OS = centos ]];then
+  yum update && yum install -y socat wget gcc-c++ zlib zlib-devel pcre pcre-devel openssl openssl-devel unzip
 else
-echo "不支持的系统"
+  apt update && apt install -y socat wget libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev unzip ufw
 fi
 }
-read -p "请输入Web域名：" WEB
-read -p "请输入Trojan-go域名：" TROJAN_GO
 acme(){
 cd
-curl https://get.acme.sh | sh
-./.acme.sh/acme.sh --set-default-ca --server letsencrypt
-./.acme.sh/acme.sh --register-account -m x`date "+%Y%m%d%H%M%S"`x${RANDOM}x@qq.com
-./.acme.sh/acme.sh  --issue -d $WEB --standalone &&
-mkdir -p /ssl/$WEB
-./.acme.sh/acme.sh --installcert -d $WEB --fullchain-file /ssl/$WEB/cret.crt --key-file /ssl/$WEB/private.key
-./.acme.sh/acme.sh  --issue -d $TROJAN_GO --standalone &&
-mkdir -p /ssl/$TROJAN_GO
-./.acme.sh/acme.sh --installcert -d $TROJAN_GO --fullchain-file /ssl/$TROJAN_GO/cret.crt --key-file /ssl/$TROJAN_GO/private.key
-echo  "证书安装路径：
+[ ! -d  .acme.sh ] && curl https://get.acme.sh | sh
+  ./.acme.sh/acme.sh --set-default-ca --server letsencrypt
+  ./.acme.sh/acme.sh --register-account -m x`date "+%Y%m%d%H%M%S"`x${RANDOM}x@qq.com
+  ./.acme.sh/acme.sh  --issue -d $WEB --standalone &&
+  mkdir -p /ssl/$WEB
+  ./.acme.sh/acme.sh --installcert -d $WEB --fullchain-file /ssl/$WEB/cret.crt --key-file /ssl/$WEB/private.key
+  ./.acme.sh/acme.sh  --issue -d $TROJAN_GO --standalone &&
+  mkdir -p /ssl/$TROJAN_GO
+  ./.acme.sh/acme.sh --installcert -d $TROJAN_GO --fullchain-file /ssl/$TROJAN_GO/cret.crt --key-file /ssl/$TROJAN_GO/private.key
+  echo  "证书安装路径：
 Web证书：
 	公钥路径：/ssl/$WEB/cret.crt
 	私钥路径：/ssl/$WEB/private.key
@@ -30,15 +28,16 @@ Web证书：
 Trojan-go证书：
 	公钥路径：/ssl/$TROJAN_GO/cret.crt
 	私钥路径：/ssl/$TROJAN_GO/private.key"
-./.acme.sh/acme.sh  --upgrade  --auto-upgrade
+  ./.acme.sh/acme.sh  --upgrade  --auto-upgrade
 }
 nginx(){
 cd /usr/local/
-wget https://nginx.org/download/nginx-1.22.0.tar.gz
-tar zxvf nginx-*
-cd nginx-1.22.0
-./configure --prefix=/usr/local/nginx --pid-path=/var/run/nginx/nginx.pid --lock-path=/var/lock/nginx.lock --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-http_gzip_static_module --http-client-body-temp-path=/var/temp/nginx/client --http-proxy-temp-path=/var/temp/nginx/proxy --http-fastcgi-temp-path=/var/temp/nginx/fastcgi --http-uwsgi-temp-path=/var/temp/nginx/uwsgi --http-scgi-temp-path=/var/temp/nginx/scgi --with-http_ssl_module --with-stream --with-stream_ssl_preread_module --with-http_v2_module &&
-make && make install && echo "succeed"
+[ ! -e /usr/local/nginx-1.22.0.tar.gz ] && wget https://nginx.org/download/nginx-1.22.0.tar.gz
+[ ! -d /usr/local/nginx-1.22.0 ] && tar zxvf nginx-1.22.0.tar.gz
+if [ ! -d /usr/local/nginx ];then 
+  cd /usr/local/nginx-1.22.0
+  ./configure --prefix=/usr/local/nginx --pid-path=/var/run/nginx/nginx.pid --lock-path=/var/lock/nginx.lock --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --with-http_gzip_static_module --http-client-body-temp-path=/var/temp/nginx/client --http-proxy-temp-path=/var/temp/nginx/proxy --http-fastcgi-temp-path=/var/temp/nginx/fastcgi --http-uwsgi-temp-path=/var/temp/nginx/uwsgi --http-scgi-temp-path=/var/temp/nginx/scgi --with-http_ssl_module --with-stream --with-stream_ssl_preread_module --with-http_v2_module && make && make install && echo "succeed"
+fi
 #修改nginx主配置
 (
 cat << EOF
@@ -137,8 +136,8 @@ systemctl daemon-reload && systemctl start nginx.service && systemctl enable ngi
 }
 trojan(){
 cd /usr/local/
-wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip &&
-unzip -d /usr/local/trojan-go/ trojan-go-linux-amd64.zip &&
+[ ! -e /usr/local/trojan-go-linux-amd64.zip ] && wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
+[ ! -d /usr/local/trojan-go ] && unzip -d /usr/local/trojan-go/ trojan-go-linux-amd64.zip
 #trojan-go配置文件
 (
 cat << EOF
