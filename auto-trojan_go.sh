@@ -2,9 +2,9 @@
 os_check(){
 echo "安装相关软件包"
 if [ `lsb_release -a|grep -e "[Dd]ebian"` != ''  -o `lsb_release -a|grep -e "[Uu]buntu"` != '' ];then
-apt update && apt install socat curl wget libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev
+apt update && apt install socat curl wget libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev unzip
 elif [[ `cat /etc/redhat-release` != '' ]];then
-yum update && yum install socat curl wget gcc-c++ zlib zlib-devel pcre pcre-devel openssl openssl-devel
+yum update && yum install socat curl wget gcc-c++ zlib zlib-devel pcre pcre-devel openssl openssl-devel unzip
 else
 echo "不支持的系统"
 fi
@@ -185,8 +185,8 @@ http {
 }
 EOF
 ) > /usr/local/nginx/conf/nginx.conf
-sed -i "s/www.yuji2022.com/$WEB/g" /usr/local/nginx/conf/nginx.conf
-sed -i "s/trojan.yuji2022.com/$WEB/g" /usr/local/nginx/conf/nginx.conf
+sed -i "17s/www.yuji2022.com/$WEB/g" /usr/local/nginx/conf/nginx.conf
+sed -i "18s/trojan.yuji2022.com/$TROJAN_GO/g" /usr/local/nginx/conf/nginx.conf
 #web配置
 (
 cat << EOF
