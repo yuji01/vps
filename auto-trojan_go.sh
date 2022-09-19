@@ -1,4 +1,5 @@
 #!/bin/bash
+timedatectl set-timezone Asia/Shanghai
 read -e -p "请输入Web域名：" WEB
 read -e -p "请输入Trojan-go域名：" TROJAN_GO
 os_check(){
@@ -40,7 +41,7 @@ if [ ! -d /usr/local/nginx ];then
 fi
 #修改nginx主配置
 (
-cat << EOF
+cat << \EOF
 #user  nobody;
 worker_processes  auto;
 events {
@@ -79,46 +80,42 @@ http {
 }
 EOF
 ) > /usr/local/nginx/conf/nginx.conf
-sed -i '8c\    map $ssl_preread_server_name $backend_name {' /usr/local/nginx/conf/nginx.conf
 sed -i "9s/www.yuji2022.com/$WEB/g" /usr/local/nginx/conf/nginx.conf
 sed -i "10s/trojan.yuji2022.com/$TROJAN_GO/g" /usr/local/nginx/conf/nginx.conf
-sed -i '26c\        proxy_pass  $backend_name;' /usr/local/nginx/conf/nginx.conf
 #web配置
 (
-cat << EOF
+cat << \EOF
 server {
-	listen	80;
-	server_name 	www.yuji2022.com;
+    listen    80;
+    server_name    www.yuji2022.com;
     if ($server_port !~ 4431){
-        	rewrite ^(/.*)$ https://$host$1 permanent;
-    	}
+        rewrite ^(/.*)$ https://$host$1 permanent;
+    }
 }
 server {
-	listen	4431 ssl http2;
-	server_name	www.yuji2022.com;
-	#ssl
-	ssl_protocols TLSv1.2 TLSv1.3;
+    listen    4431  ssl  http2;
+    server_name    www.yuji2022.com;
+    #ssl
+    ssl_protocols TLSv1.2 TLSv1.3;
     ssl_certificate      /ssl/www.yuji2022.com/cret.crt;
     ssl_certificate_key  /ssl/www.yuji2022.com/private.key;
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  5m;
     ssl_ciphers  HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers  on;
-	
-	root		/www;
-	index	index.html;
+
+    root     /www;
+    index   index.html;
 }
 EOF
 ) > /usr/local/nginx/conf/web.conf
-sed -i '4c\    if ($server_port !~ 4431){' /usr/local/nginx/conf/web.conf
+#替换域名
 sed -i "s/www.yuji2022.com/$WEB/g" /usr/local/nginx/conf/web.conf
-sed -i "s@/ssl/www.yuji2022.com/cret.crt@/ssl/$WEB/cret.crt@g" /usr/local/nginx/conf/web.conf
-sed -i "s@/ssl/www.yuji2022.com/private.key@/ssl/$WEB/private.key@g" /usr/local/nginx/conf/web.conf
 mkdir -p /var/temp/nginx/client
 mkdir -p /www && cp /usr/local/nginx/html/* /www
 #创建nginx启动脚本
 (
-cat << EOF
+cat << \EOF
 [Unit]
 Description=nginx service
 After=network.target 
@@ -144,7 +141,7 @@ cd /usr/local/
 [ ! -d /usr/local/trojan-go ] && unzip -d /usr/local/trojan-go/ trojan-go-linux-amd64.zip
 #trojan-go配置文件
 (
-cat << EOF
+cat << \EOF
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
@@ -247,13 +244,13 @@ EOF
 ) > /usr/local/trojan-go/server.json
 
 #修改服务器域名
-sed -i "15,16s/trojan.yuji2022.com/$TROJAN_GO/" /usr/local/trojan-go/server.json
+sed -i "s/trojan.yuji2022.com/$TROJAN_GO/g" /usr/local/trojan-go/server.json
 #修改密码
 PASSWORD="`date "+%Y%m%d%H%M%S"`yjbzl$RANDOM"
-sed -i "9s/yujibuzailai/$PASSWORD/" /usr/local/trojan-go/server.json
-PATH_Trojan="`date "+%Y%m%d%H%M%S"`yuji2022$RANDOM"
+sed -i "/password/s/yujibuzailai/$PASSWORD/" /usr/local/trojan-go/server.json
 #替换path
-sed -i "54s/yuji2022path/$PATH_Trojan/" /usr/local/trojan-go/server.json
+PATH_Trojan="`date "+%Y%m%d%H%M%S"`yuji2022$RANDOM"
+sed -i "/path/s/yuji2022path/$PATH_Trojan/" /usr/local/trojan-go/server.json
 #创建trojan启动脚本
 (
 cat << EOF
