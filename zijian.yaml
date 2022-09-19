@@ -1,13 +1,13 @@
 proxies:
   - name: 🇺🇸 洛杉矶-6.14过期
     type: trojan
-    server: blog.yuji2022.ml
+    server: blog.yj2022.tk
     port: 443
-    password: E882476fkfm415641EqPr7st
+    password: 20220919140357yjbzl24606
     network: ws
     ws-opts:
-      path: /ccy1yyydshehehe
+      path: /20220919140357yuji202226216
       headers:
-        Host: blog.yuji2022.ml
-    sni: blog.yuji2022.ml
+        Host: blog.yj2022.tk
+    sni: blog.yj2022.tk
     mux: true
