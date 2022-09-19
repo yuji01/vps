@@ -79,15 +79,17 @@ http {
 }
 EOF
 ) > /usr/local/nginx/conf/nginx.conf
+sed -i '8c\    map $ssl_preread_server_name $backend_name {' /usr/local/nginx/conf/nginx.conf
 sed -i "9s/www.yuji2022.com/$WEB/g" /usr/local/nginx/conf/nginx.conf
 sed -i "10s/trojan.yuji2022.com/$TROJAN_GO/g" /usr/local/nginx/conf/nginx.conf
+sed -i '26c\        proxy_pass  $backend_name;' /usr/local/nginx/conf/nginx.conf
 #web配置
 (
 cat << EOF
 server {
 	listen	80;
 	server_name 	www.yuji2022.com;
-	if ($server_port !~ 4431){
+    if ($server_port !~ 4431){
         	rewrite ^(/.*)$ https://$host$1 permanent;
     	}
 }
@@ -108,9 +110,11 @@ server {
 }
 EOF
 ) > /usr/local/nginx/conf/web.conf
+sed -i '4c\    if ($server_port !~ 4431){' /usr/local/nginx/conf/web.conf
 sed -i "s/www.yuji2022.com/$WEB/g" /usr/local/nginx/conf/web.conf
 sed -i "s@/ssl/www.yuji2022.com/cret.crt@/ssl/$WEB/cret.crt@g" /usr/local/nginx/conf/web.conf
 sed -i "s@/ssl/www.yuji2022.com/private.key@/ssl/$WEB/private.key@g" /usr/local/nginx/conf/web.conf
+mkdir -p /var/temp/nginx/client
 mkdir -p /www && cp /usr/local/nginx/html/* /www
 #创建nginx启动脚本
 (
@@ -241,12 +245,16 @@ cat << EOF
 }
 EOF
 ) > /usr/local/trojan-go/server.json
+
+#修改服务器域名
+sed -i "15,16s/trojan.yuji2022.com/$TROJAN_GO/" /usr/local/trojan-go/server.json
+#修改密码
 PASSWORD="`date "+%Y%m%d%H%M%S"`yjbzl$RANDOM"
-sed -i "s/trojan.yuji2022.com/$TROJAN_GO/g" /usr/local/trojan-go/server.json
-sed -i "s/yujibuzailai/$PASSWORD/g" /usr/local/trojan-go/server.json
+sed -i "9s/yujibuzailai/$PASSWORD/" /usr/local/trojan-go/server.json
 PATH_Trojan="`date "+%Y%m%d%H%M%S"`yuji2022$RANDOM"
-sed -i "s@yuji2022path@$PATH_Trojan@g" /usr/local/trojan-go/server.json
-#创建启动脚本
+#替换path
+sed -i "54s/yuji2022path/$PATH_Trojan/" /usr/local/trojan-go/server.json
+#创建trojan启动脚本
 (
 cat << EOF
 [Unit]
