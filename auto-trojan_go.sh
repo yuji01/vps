@@ -4,9 +4,9 @@ read -e -p "请输入Trojan-go域名：" TROJAN_GO
 os_check(){
 [ -e /etc/redhat-release ] && OS=centos || OS=other
 if [[ $OS = centos ]];then
-  yum update && yum install -y socat wget gcc-c++ zlib zlib-devel pcre make pcre-devel openssl openssl-devel unzip
+  yum update -y && yum install -y socat wget gcc-c++ zlib zlib-devel pcre make pcre-devel openssl openssl-devel unzip
 else
-  apt update && apt install -y socat wget gcc libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev unzip ufw make
+  apt update -y && apt install -y socat wget gcc libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev unzip ufw make
 fi
 }
 acme(){
