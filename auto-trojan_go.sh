@@ -110,6 +110,7 @@ EOF
 sed -i "s/www.yuji2022.com/$WEB/g" /usr/local/nginx/conf/web.conf
 mkdir -p /var/temp/nginx/client
 mkdir -p /www && cp /usr/local/nginx/html/* /www
+mkdir /var/run/nginx
 #创建nginx启动脚本
 (
 cat << \EOF
