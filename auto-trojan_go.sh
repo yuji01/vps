@@ -87,10 +87,7 @@ sed -i "10s/trojan.yuji2022.com/$TROJAN_GO/g" /usr/local/nginx/conf/nginx.conf
 cat << \EOF
 server {
     listen    80;
-    server_name    www.yuji2022.com;
-    if ($server_port !~ 4431){
-        rewrite ^(/.*)$ https://$host$1 permanent;
-    }
+    server_name    localhost;
 }
 server {
     listen    4431  ssl  http2;
@@ -274,12 +271,12 @@ RestartSec=1s
 WantedBy=multi-user.target
 EOF
 ) > /lib/systemd/system/trojan.service
-systemctl daemon-reload && systemctl start trojan.service && systemctl enable trojan.service
+systemctl daemon-reload && systemctl start trojan.service && systemctl enable trojan.service &&
 echo "Trojan配置：
 `sed -n '/.*sni.*/p' /usr/local/trojan-go/server.json|sed 's/sni/服务器地址/'`
-    "端口": "443"
+    端口: "443"
 `sed -n '/.*password/p' /usr/local/trojan-go/server.json|head -n1|sed 's/password/连接密码/'`
-    "网络": "ws"
+    网络: "ws"
 ws-opts:
 `sed -n '/.*path.*/p' /usr/local/trojan-go/server.json|sed 's/path/路径/'`
 "
