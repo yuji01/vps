@@ -251,7 +251,7 @@ PATH_Trojan="`date "+%Y%m%d%H%M%S"`yuji2022$RANDOM"
 sed -i "/path/s/yuji2022path/$PATH_Trojan/" /usr/local/trojan-go/server.json
 #创建trojan启动脚本
 (
-cat << EOF
+cat << \EOF
 [Unit]
 Description=trojan
 Documentation=https://github.com/p4gefau1t/trojan-go
