@@ -1,13 +1,25 @@
 proxies:
   - name: 🇺🇸 洛杉矶-6.14过期
     type: trojan
-    server: blog.yj2022.tk
+    server: blog.yuji2022.cf
     port: 443
-    password: 20220919140357yjbzl24606
+    password: 20220920081152yjbzl24662
     network: ws
     ws-opts:
-      path: /20220919140357yuji202226216
+      path: /20220920081152yuji202228024
       headers:
-        Host: blog.yj2022.tk
-    sni: blog.yj2022.tk
+        Host: blog.yuji2022.cf
+    sni: blog.yuji2022.cf
     mux: true
+proxy-groups:
+  - name: PROXY
+    type: select
+    proxies:
+      - 🇺🇸 洛杉矶-6.14过期
+rules:
+  - DOMAIN-SUFFIX,googletraveladservices.com,DIRECT
+  - DOMAIN,dl.google.com,DIRECT
+  - DOMAIN,mtalk.google.com,DIRECT
+  - DOMAIN-SUFFIX,17gouwuba.com,REJECT
+  - DOMAIN-SUFFIX,186078.com,REJECT
+  - MATCH,PROXY
