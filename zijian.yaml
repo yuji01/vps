@@ -1,4 +1,17 @@
 proxies:
+  - name: 🇺🇸 洛杉矶-CDN
+    type: trojan
+    server: cdn.yuji2022.cf
+    port: 443
+    password: 20220920081152yjbzl24662
+    network: ws
+    ws-opts:
+      path: /20220920081152yuji202228024
+      headers:
+        Host: d2tmlokvzlys8j.cloudfront.net
+    sni: d2tmlokvzlys8j.cloudfront.net
+    mux: true
+    
   - name: 🇺🇸 洛杉矶
     type: trojan
     server: blog.yuji2022.cf
@@ -12,18 +25,6 @@ proxies:
     sni: blog.yuji2022.cf
     mux: true
     
-  - name: 🇺🇸 洛杉矶-AWS_cdn
-    type: trojan
-    server: 13.224.254.198
-    port: 443
-    password: 20220920081152yjbzl24662
-    network: ws
-    ws-opts:
-      path: /20220920081152yuji202228024
-      headers:
-        Host: d2tmlokvzlys8j.cloudfront.net
-    sni: d2tmlokvzlys8j.cloudfront.net
-    mux: true
 proxy-groups:
   - name: PROXY
     type: select
