@@ -12,7 +12,7 @@ proxies:
     sni: blog.yuji2022.cf
     mux: true
     
-  - name: 🇺🇸 洛杉矶--cdn
+  - name: 🇺🇸 洛杉矶-AWS_cdn
     type: trojan
     server: 13.224.254.198
     port: 443
