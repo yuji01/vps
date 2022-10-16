@@ -1,5 +1,5 @@
 proxies:
-  - name: 🇺🇸 洛杉矶-6.14过期
+  - name: 🇺🇸 洛杉矶
     type: trojan
     server: blog.yuji2022.cf
     port: 443
@@ -11,11 +11,24 @@ proxies:
         Host: blog.yuji2022.cf
     sni: blog.yuji2022.cf
     mux: true
+    
+  - name: 🇺🇸 洛杉矶--cdn
+    type: trojan
+    server: 13.224.254.198
+    port: 443
+    password: 20220920081152yjbzl24662
+    network: ws
+    ws-opts:
+      path: /20220920081152yuji202228024
+      headers:
+        Host: d2tmlokvzlys8j.cloudfront.net
+    sni: d2tmlokvzlys8j.cloudfront.net
+    mux: true
 proxy-groups:
   - name: PROXY
     type: select
     proxies:
-      - 🇺🇸 洛杉矶-6.14过期
+      - 🇺🇸 洛杉矶
 rules:
   - DOMAIN-SUFFIX,googletraveladservices.com,DIRECT
   - DOMAIN,dl.google.com,DIRECT
