@@ -1,59 +1,19 @@
+dns:
+  enable: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  listen: 0.0.0.0:53
+  nameserver:
+    - 223.5.5.5
+    - 114.114.114.114
+  fallback:
+    - 223.5.5.5
+    - 114.114.114.114
+    - 8.8.8.8
+    - 8.8.4.4
+  fake-ip-filter:
+    - baidu.com
 proxies:
-
-  - name: 🇺🇸 洛杉矶-CDN_jp
-    type: trojan
-    server: jp.cdn.yuji2022.tk
-    port: 443
-    password: 20220920081152yjbzl24662
-    network: ws
-    ws-opts:
-      path: /20220920081152yuji202228024
-      headers:
-        Host: cdn.yuji2022.cf
-    sni: cdn.yuji2022.cf
-    mux: true
-
-###
-  - name: 🇯🇵 日本-CDN_jp
-    type: trojan
-    server: jp.cdn.yuji2022.tk
-    port: 443
-    password: XJYSO5HQxUjQunm9
-    network: ws
-    ws-opts:
-      path: /OqCd8nolBIRGioo1
-      headers:
-        Host: cdn.yuji2022.ml
-    sni: cdn.yuji2022.ml
-    mux: true
-
-###
-  - name: 🇯🇵 日本
-    type: trojan
-    server: blog.yuji2022.ml
-    port: 443
-    password: XJYSO5HQxUjQunm9
-    network: ws
-    ws-opts:
-      path: /OqCd8nolBIRGioo1
-      headers:
-        Host: blog.yuji2022.ml
-    sni: blog.yuji2022.ml
-    mux: true
-###
-  - name: 🇯🇵 日本-CDN_sg
-    type: trojan
-    server: sg.cdn.yuji2022.tk
-    port: 443
-    password: XJYSO5HQxUjQunm9
-    network: ws
-    ws-opts:
-      path: /OqCd8nolBIRGioo1
-      headers:
-        Host: cd.yuji2022.ml
-    sni: cdn.yuji2022.ml
-    mux: true
-###
   - name: 🇺🇸 洛杉矶
     type: trojan
     server: blog.yuji2022.cf
@@ -66,15 +26,94 @@ proxies:
         Host: blog.yuji2022.cf
     sni: blog.yuji2022.cf
     mux: true
+  - name: 🇺🇸 洛杉矶-CDN_fc
+    type: trojan
+    server: fcf1.yuji2022.tk
+    port: 443
+    password: 20220920081152yjbzl24662
+    network: ws
+    ws-opts:
+      path: /20220920081152yuji202228024
+      headers:
+        Host: blog.yuji2022.cf
+    sni: blog.yuji2022.cf
+    mux: true
+  - name: 🇺🇸 洛杉矶-CDN_sg
+    type: trojan
+    server: sg.cdn.yuji2022.tk
+    port: 443
+    password: 20220920081152yjbzl24662
+    network: ws
+    ws-opts:
+      path: /20220920081152yuji202228024
+      headers:
+        Host: cdn.yuji2022.cf
+    sni: cdn.yuji2022.cf
+    mux: true
+  - name: 🇺🇸 洛杉矶-CDN_jp
+    type: trojan
+    server: jp.cdn.yuji2022.tk
+    port: 443
+    password: 20220920081152yjbzl24662
+    network: ws
+    ws-opts:
+      path: /20220920081152yuji202228024
+      headers:
+        Host: cdn.yuji2022.cf
+    sni: cdn.yuji2022.cf
+    mux: true
+  - name: 🇯🇵 日本-CDN_fc
+    type: trojan
+    server: fcf1.yuji2022.tk
+    port: 443
+    password: XJYSO5HQxUjQunm9
+    network: ws
+    ws-opts:
+      path: /OqCd8nolBIRGioo1
+      headers:
+        Host: blog.yuji2022.ml
+    sni: blog.yuji2022.ml
+    mux: true
+  - name: 🇯🇵 日本-CDN_jp
+    type: trojan
+    server: jp.cdn.yuji2022.tk
+    port: 443
+    password: XJYSO5HQxUjQunm9
+    network: ws
+    ws-opts:
+      path: /OqCd8nolBIRGioo1
+      headers:
+        Host: cdn.yuji2022.ml
+    sni: cdn.yuji2022.ml
+    mux: true
+  - name: 🇯🇵 日本-CDN_sg
+    type: trojan
+    server: sg.cdn.yuji2022.tk
+    port: 443
+    password: XJYSO5HQxUjQunm9
+    network: ws
+    ws-opts:
+      path: /OqCd8nolBIRGioo1
+      headers:
+        Host: cdn.yuji2022.ml
+    sni: cdn.yuji2022.ml
+    mux: true
+  - name: 🇯🇵 日本
+    type: trojan
+    server: blog.yuji2022.ml
+    port: 443
+    password: XJYSO5HQxUjQunm9
+    network: ws
+    ws-opts:
+      path: /OqCd8nolBIRGioo1
+      headers:
+        Host: blog.yuji2022.ml
+    sni: blog.yuji2022.ml
+    mux: true
 proxy-groups:
   - name: PROXY
     type: select
-    proxies:
-      - 🇯🇵 日本
-      - 🇺🇸 洛杉矶-CDN
-      - 🇯🇵 日本-CDN_sg
-      - 🇯🇵 日本-CDN_jp
-      - 🇺🇸 洛杉矶
+    proxies: []
 rules:
   - DOMAIN-SUFFIX,googletraveladservices.com,DIRECT
   - DOMAIN,dl.google.com,DIRECT
