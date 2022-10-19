@@ -98,6 +98,16 @@ proxies:
         Host: cdn.yuji2022.ml
     sni: cdn.yuji2022.ml
     mux: true
+  - name: 🇯🇵 再战8888
+    type: vmess
+    server: 38.47.98.245
+    port: "8888"
+    uuid: c5728a67-1ce1-401c-e426-cf6735d15d6b
+    alterId: "0"
+    cipher: auto
+    network: ws
+    ws-opts:
+      path: /c5728a67-1ce1-401c-e426-cf6735d15d6b
   - name: 🇯🇵 日本
     type: trojan
     server: blog.yuji2022.ml
@@ -113,7 +123,8 @@ proxies:
 proxy-groups:
   - name: PROXY
     type: select
-    proxies: []
+    proxies:
+      - 🇺🇸 洛杉矶
 rules:
   - DOMAIN-SUFFIX,googletraveladservices.com,DIRECT
   - DOMAIN,dl.google.com,DIRECT
