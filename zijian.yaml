@@ -1,4 +1,33 @@
 proxies:
+
+  - name: 🇺🇸 洛杉矶-CDN_jp
+    type: trojan
+    server: jp.cdn.yuji2022.tk
+    port: 443
+    password: 20220920081152yjbzl24662
+    network: ws
+    ws-opts:
+      path: /20220920081152yuji202228024
+      headers:
+        Host: cdn.yuji2022.cf
+    sni: cdn.yuji2022.cf
+    mux: true
+
+###
+  - name: 🇯🇵 日本-CDN_jp
+    type: trojan
+    server: jp.cdn.yuji2022.tk
+    port: 443
+    password: XJYSO5HQxUjQunm9
+    network: ws
+    ws-opts:
+      path: /OqCd8nolBIRGioo1
+      headers:
+        Host: cdn.yuji2022.ml
+    sni: cdn.yuji2022.ml
+    mux: true
+
+###
   - name: 🇯🇵 日本
     type: trojan
     server: blog.yuji2022.ml
@@ -11,42 +40,20 @@ proxies:
         Host: blog.yuji2022.ml
     sni: blog.yuji2022.ml
     mux: true
-  - name: 🇺🇸 洛杉矶-CDN
-    type: trojan
-    server: cdn.yuji2022.cf
-    port: 443
-    password: 20220920081152yjbzl24662
-    network: ws
-    ws-opts:
-      path: /20220920081152yuji202228024
-      headers:
-        Host: d2tmlokvzlys8j.cloudfront.net
-    sni: d2tmlokvzlys8j.cloudfront.net
-    mux: true
+###
   - name: 🇯🇵 日本-CDN_sg
     type: trojan
-    server: sg.yuji2022.ml
+    server: sg.cdn.yuji2022.tk
     port: 443
     password: XJYSO5HQxUjQunm9
     network: ws
     ws-opts:
       path: /OqCd8nolBIRGioo1
       headers:
-        Host: d2of7464itccsk.cloudfront.net
-    sni: d2of7464itccsk.cloudfront.net
+        Host: cd.yuji2022.ml
+    sni: cdn.yuji2022.ml
     mux: true
-  - name: 🇯🇵 日本-CDN_jp
-    type: trojan
-    server: jp.yuji2022.ml
-    port: 443
-    password: XJYSO5HQxUjQunm9
-    network: ws
-    ws-opts:
-      path: /OqCd8nolBIRGioo1
-      headers:
-        Host: d2of7464itccsk.cloudfront.net
-    sni: d2of7464itccsk.cloudfront.net
-    mux: true
+###
   - name: 🇺🇸 洛杉矶
     type: trojan
     server: blog.yuji2022.cf
