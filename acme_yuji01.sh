@@ -65,7 +65,7 @@ register_acme(){
 80_acme_v4(){
   echo -e "${RED}请确保80端口没有被占用$END"
 #干掉占用80端口的程序
-kill `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'`
+kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'`
   read -p "请输入域名：" input
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone
   if [ $? -eq 0 ];then
@@ -83,7 +83,7 @@ kill `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'`
 80_acme_v6(){
   echo -e "${RED}请确保80端口没有被占用$END"
 #干掉占用80端口的程序
-kill `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'`
+kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'`
   read -p "请输入域名：" input
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone --listen-v6
   if [ $? -eq 0 ];then
