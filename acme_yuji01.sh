@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 RED="\e[1;31m"
 GREEN="\e[1;32m"
 OTHER="\e[1;$[RANDOM%7+31]m"
