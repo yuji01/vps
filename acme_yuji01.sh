@@ -157,6 +157,7 @@ while :;do
     5)
       echo
       80_acme_v6
+    ;;
     6)
       echo
       cf_api
