@@ -13,7 +13,8 @@ echo -e "${OTHER}
   4  ---  warp-go
   5  ---  查看ipv4/ipv6优先
   6  ---  hysteria$
-  7  ---  x-ui
+  7  ---  安装原版x-ui
+  8  ---  安装魔改版x-ui
 ${END}
 "
 read -e -p "请输入数字：" INPUT
@@ -41,6 +42,9 @@ case $INPUT in
   ;;
   7)
     bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)
+  ;;
+  8)
+    bash <(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh)
   ;;
   *)
     echo -e "${RED}请重新输入${END}"
