@@ -11,7 +11,8 @@ echo -e "${OTHER}菜单：
   3  ---  流媒体检测
   4  ---  warp-go
   5  ---  查看ipv4/ipv6优先
-  6  ---  hysteria${END}
+  6  ---  hysteria$
+  7  ---  x-ui{END}
 "
 read -e -p "请输入数字：" INPUT
 case $INPUT in
@@ -35,6 +36,9 @@ case $INPUT in
   ;;
   6)
     bash <(curl -fsSL https://git.io/hysteria.sh)
+  ;;
+  7)
+    bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)
   ;;
   *)
     echo -e "${RED}请重新输入${END}"
