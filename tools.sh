@@ -12,7 +12,7 @@ echo -e "${OTHER}
   3  ---  流媒体检测
   4  ---  warp-go
   5  ---  查看ipv4/ipv6优先
-  6  ---  hysteria$
+  6  ---  hysteria
   7  ---  安装原版x-ui
   8  ---  安装魔改版x-ui
 ${END}
