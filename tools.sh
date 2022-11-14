@@ -5,7 +5,7 @@ OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
 while :;do
 echo -e "${OTHER}
-  菜单：
+菜单：
   0  ---  退出脚本
   1  ---  bbr脚本
   2  ---  使用ACME申请证书
