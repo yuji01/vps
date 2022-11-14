@@ -4,7 +4,8 @@ GREEN="\e[1;32m"
 OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
 while :;do
-echo -e "${OTHER}菜单：
+echo -e "${OTHER}
+  菜单：
   0  ---  退出脚本
   1  ---  bbr脚本
   2  ---  使用ACME申请证书
@@ -12,7 +13,8 @@ echo -e "${OTHER}菜单：
   4  ---  warp-go
   5  ---  查看ipv4/ipv6优先
   6  ---  hysteria$
-  7  ---  x-ui{END}
+  7  ---  x-ui
+${END}
 "
 read -e -p "请输入数字：" INPUT
 case $INPUT in
