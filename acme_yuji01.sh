@@ -7,24 +7,27 @@ END="\e[0m"
 DIR=`pwd ~`
 #安装证书的路径
 SSL='/ssl'
-#系统判断及安装相关的依赖
-os_check(){
-apt &> /dev/null && OS='debian' || OS='centos'
-case $OS in
-  debian)
-    apt update && apt install socat
-  ;;
-  centos)
-    yum update && yum install socat
-esac
+#检查是否是root用户运行
+[[ "`id -u`" != "0" ]] && echo -e "${RED} 请以root用户运行" && exit 1
+#判断系统并安装相关的包
+check_system(){
+if [[ ! -z "`cat /etc/issue | grep -iE "debian"`" ]]; then
+  apt-get install socat -y
+elif [[ ! -z "`cat /etc/issue | grep -iE "ubuntu"`" ]]; then
+  apt-get install socat -y
+elif [[ ! -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]]; then
+  yum install socat -y
+else
+  echo -e "${RED}很抱歉，你的系统不受支持!" && exit 1
+fi
 }
 #安装acme脚本
 install_acme(){
   echo -e "${RED}Acme脚本默认安装在${DIR}$END"
-  os_check &&
+  check_system &&
   cd $DIR
   curl https://get.acme.sh | sh
-  [ -d $DIR/.acme.sh ] && echo -e "${GREEN}安装成功$END" || echo -e "${RED}安装失败$END"
+  [ -f $DIR/.acme.sh/acme.sh ] && echo -e "${GREEN}安装成功$END" || echo -e "${RED}安装失败$END"
 }
 #改变ca提供商
 change_ca(){
@@ -65,7 +68,7 @@ register_acme(){
 80_acme_v4(){
   echo -e "${RED}请确保80端口没有被占用$END"
 #干掉占用80端口的程序
-kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'`
+kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'` &> /dev/null
   read -p "请输入域名：" input
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone
   if [ $? -eq 0 ];then
@@ -83,7 +86,7 @@ kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'`
 80_acme_v6(){
   echo -e "${RED}请确保80端口没有被占用$END"
 #干掉占用80端口的程序
-kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'`
+kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'` &> /dev/null
   read -p "请输入域名：" input
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone --listen-v6
   if [ $? -eq 0 ];then
@@ -136,36 +139,28 @@ while :;do
   case $menu in
     0)
       echo
-      break
-    ;;
+      break;;
     1)
       echo
-      install_acme
-    ;;
+      install_acme;;
     2)
       echo
-      change_ca
-    ;;
+      change_ca;;
     3)
       echo
-      register_acme
-    ;;
+      register_acme;;
     4)
       echo
-      80_acme_v4
-    ;;
+      80_acme_v4;;
     5)
       echo
-      80_acme_v6
-    ;;
+      80_acme_v6;;
     6)
       echo
-      cf_api
-    ;;
+      cf_api;;
     7)
       echo
-      update_acme
-    ;;
+      update_acme;;
     *)
       echo
       echo -e "${RED}请重新输入$END"
