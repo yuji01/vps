@@ -18,7 +18,7 @@ case $os in
     mkdir -p /etc/apt/keyrings &&
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg &&
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null &&
-    apt-get update && apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     ;;
   ubuntu)
     apt-get remove docker docker-engine docker.io containerd runc;
@@ -27,13 +27,13 @@ case $os in
     mkdir -p /etc/apt/keyrings &&
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg &&
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null &&
-    apt-get update && apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
     ;;
   centos)
     yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine;
     yum install -y yum-utils &&
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
-    yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin    
+    yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin    
 esac
 }
 clone_v2b(){
@@ -41,4 +41,6 @@ clone_v2b(){
 }
 check_os
 install_docker
+echo "docker 安装完成"
 clone_v2b
+echo "克隆v2board完成"
