@@ -15,3 +15,7 @@ curl -O https://raw.githubusercontent.com/yuji01/vps/main/auto-trojan_go.sh && c
 ```
 bash <(wget -qO- --no-check-certificate https://gitlab.com/spiritysdx/za/-/raw/main/ecs.sh)
 ```
+# 安装docker和v2b脚本
+```
+bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/install_docker_v2b.sh)
+```
