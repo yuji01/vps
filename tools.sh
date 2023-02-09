@@ -14,7 +14,8 @@ bash <(wget -qO- --no-check-certificate https://gitlab.com/spiritysdx/za/-/raw/m
 }
 bbr(){
 #开启bbr
-bash <(curl -fsSL https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh)
+[ ! -e `pwd`/tcp.sh ] && wget -N --no-check-certificate "https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh"
+chmod +x tcp.sh && ./tcp.sh
 }
 nf_check(){
 #奈飞解锁
@@ -62,7 +63,7 @@ echo -e "${OTHER}
   ${RED}q  ---  退出脚本${END}
 --------------------------------
 --------------------------------
-  ${OTHER}1  ---  路由检测
+  ${OTHER}1  ---  三网回程
   2  ---  系统测试
   3  ---  bbr脚本
 --------------------------------
