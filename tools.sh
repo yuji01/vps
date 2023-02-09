@@ -101,6 +101,11 @@ docker_install(){
   check_os
   install_docker && echo "docker 安装完成" || echo "docker 安装失败"
 }
+xrayr(){
+#下载xrayr
+git clone https://github.com/XrayR-project/XrayR-release ./xrayr
+}
+
 while :;do
 echo -e "${OTHER}
 菜单：
@@ -124,6 +129,7 @@ echo -e "${OTHER}
   12 ---  安装hysteria
 --------------------------------
   13 ---  安装docker
+  14 ---  下载xrayr
 ${END}
 "
 read -e -p "请输入：" INPUT
@@ -169,6 +175,9 @@ read -e -p "请输入：" INPUT
     13)
       clear
       docker_install;;
+    14)
+      clear
+      xrayr;;
     *)
       echo -e "${RED}请重新输入${END}"
   esac
