@@ -85,28 +85,40 @@ read -e -p "请输入：" INPUT
     q|Q)
       break;;
     1)
+      clear
       route_check;;
     2)
+      clear
       system_test;;
     3)
+      clear
       bbr;;
     4)
+      clear
       nf_check;;
     5)
+      clear
       media_check;;
     6)
+      clear
       warp;;
     7)
+      clear
       warp-go;;
     8)
+      clear
       ipv4_or_ipv6;;
     9)
+      clear
       acme;;
     10)
+      clear
       xui;;
     11)
+      clear
       xui_mod;;
     12)
+      clear
       hysteria;;
     *)
       echo -e "${RED}请重新输入${END}"
