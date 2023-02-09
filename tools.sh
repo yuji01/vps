@@ -3,6 +3,13 @@ RED="\e[1;31m"
 GREEN="\e[1;32m"
 OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
+
+nf_check(){
+#检查奈飞解锁
+[ ! -e `pwd`/nf ] && wget -O nf https://github.com/sjlleo/netflix-verify/releases/download/v3.1.0-1/nf_linux_amd64
+chmod +x nf && ./nf
+}
+
 while :;do
 echo -e "${OTHER}
 菜单：
@@ -21,6 +28,7 @@ echo -e "${OTHER}
   8  ---  安装魔改版x-ui
 --------------------------------
   9  ---  测试三网回程路由
+  10 ---  测试奈飞解锁
 ${END}
 "
 read -e -p "请输入：" INPUT
@@ -45,6 +53,8 @@ read -e -p "请输入：" INPUT
       bash <(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install.sh);;
     9)
       curl https://raw.githubusercontent.com/zhanghanyun/backtrace/main/install.sh -sSf | sh;;
+    10)
+      nf_check;;
     *)
       echo -e "${RED}请重新输入${END}"
   esac
