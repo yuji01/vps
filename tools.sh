@@ -105,6 +105,10 @@ xrayr(){
 #下载xrayr
 git clone https://github.com/XrayR-project/XrayR-release ./xrayr
 }
+openai_check(){
+#检测vps是否支持使用openai的服务
+bash <(curl -Ls https://cpp.li/openai)
+}
 
 while :;do
 echo -e "${OTHER}
@@ -130,6 +134,7 @@ echo -e "${OTHER}
 --------------------------------
   13 ---  安装docker
   14 ---  下载xrayr
+  15 ---  Openai服务检测
 ${END}
 "
 read -e -p "请输入：" INPUT
@@ -178,6 +183,9 @@ read -e -p "请输入：" INPUT
     14)
       clear
       xrayr;;
+    15)
+      clear
+      openai_check;;
     *)
       echo -e "${RED}请重新输入${END}"
   esac
