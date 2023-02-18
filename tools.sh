@@ -3,7 +3,7 @@ RED="\e[1;31m"
 GREEN="\e[1;32m"
 OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
-
+[ ! $UID -eq 0 ] && echo -e "$RED请以root用户运行！$END" && exit 1 
 route_check(){
 #线路检测
 curl https://raw.githubusercontent.com/zhanghanyun/backtrace/main/install.sh -sSf | sh
@@ -109,6 +109,10 @@ openai_check(){
 #检测vps是否支持使用openai的服务
 bash <(curl -Ls https://cpp.li/openai)
 }
+install_python(){
+#安装python
+bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/install_python.sh)
+}
 
 while :;do
 echo -e "${OTHER}
@@ -135,6 +139,7 @@ echo -e "${OTHER}
   13 ---  安装docker
   14 ---  下载xrayr
   15 ---  Openai服务检测
+  16 ---  安装python 3.11.2
 ${END}
 "
 read -e -p "请输入：" INPUT
@@ -186,6 +191,9 @@ read -e -p "请输入：" INPUT
     15)
       clear
       openai_check;;
+    16)
+      clear
+      install_python;;
     *)
       echo -e "${RED}请重新输入${END}"
   esac
