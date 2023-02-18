@@ -140,7 +140,7 @@ echo -e "${OTHER}
   13 ---  安装docker
   14 ---  下载xrayr
   15 ---  Openai服务检测
-  16 ---  安装python 3.11.2
+  16 ---  编译安装Python
 ${END}
 "
 read -e -p "请输入：" INPUT
