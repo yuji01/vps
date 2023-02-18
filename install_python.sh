@@ -12,11 +12,11 @@ fi
 #安装相关依赖
 if [ $os -eq "centos" ];then
   yum update
-  yum install -y wget make
+  yum install build-essential libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev -y
   yum groupinstall "Development Tools"
 else
   apt update
-  apt install -y wget make build-essential
+  apt install build-essential libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev -y
 fi
 #安装主体
 wget https://www.python.org/ftp/python/3.11.2/Python-3.11.2.tgz
