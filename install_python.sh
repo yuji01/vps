@@ -11,12 +11,12 @@ else
 fi
 #安装相关依赖
 if [ $os -eq "centos" ];then
-  yum update &&
-  yum install -y wget make &&
-  yum groupinstall "Development Tools" &&
+  yum update
+  yum install -y wget make
+  yum groupinstall "Development Tools"
 else
-  apt update &&
-  apt install -y wget make build-essential &&
+  apt update
+  apt install -y wget make build-essential
 fi
 #安装主体
 wget https://www.python.org/ftp/python/3.11.2/Python-3.11.2.tgz
