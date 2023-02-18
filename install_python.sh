@@ -12,7 +12,7 @@ fi
 #安装相关依赖
 if [ $os -eq "centos" ];then
   yum update
-  yum install wget xz tar gcc make tk-devel    sqlite-devel zlib-devel readline-devel openssl-devel curl-devel tk-devel gdbm-devel  xz-devel bzip2-devel -y
+  yum install wget xz tar gcc make tk-devel sqlite-devel zlib-devel readline-devel openssl-devel curl-devel tk-devel gdbm-devel xz-devel bzip2-devel -y
 else
   apt update
   apt install build-essential libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev -y
