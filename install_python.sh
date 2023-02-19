@@ -11,7 +11,7 @@ else
 fi
 #安装相关依赖
 if [[ $os == "centos" ]];then
-  yum update
+  yum update -y
   rpm -qa|grep python3|xargs rpm -ev --allmatches --nodeps
   whereis python3 |xargs rm -frv
   yum install -y wget yum-utils make
