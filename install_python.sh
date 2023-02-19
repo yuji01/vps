@@ -10,7 +10,7 @@ else
   echo -e "${RED}很抱歉，你的系统不受支持!${END}" && exit 1
 fi
 #安装相关依赖
-if [ $os -eq "centos" ];then
+if [[ $os == "centos" ]];then
   yum update
   rpm -qa|grep python3|xargs rpm -ev --allmatches --nodeps
   whereis python3 |xargs rm -frv
