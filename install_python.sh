@@ -1,13 +1,13 @@
 #! /bin/bash
 #系统检测
-if [[ ! -z "cat /etc/redhat-release | grep -iE "CentOS"" ]]; then
-  os='centos'
-elif [[ ! -z "cat /etc/issue | grep -iE "debian"" ]]; then
-  os='debian'
-elif [[ ! -z "cat /etc/issue | grep -iE "ubuntu"" ]]; then
-  os='ubuntu'
+if [[ ! -z "`cat /etc/issue | grep -iE "debian"`" ]]; then
+  os="debian"
+elif [[ ! -z "`cat /etc/issue | grep -iE "ubuntu"`" ]]; then
+  os="ubuntu"
+elif [[ ! -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]]; then
+  os="centos"
 else
-  echo -e "${RED}很抱歉，你的系统不受支持!${END}" && exit 1
+  echo -e "${RED}很抱歉，你的系统不受支持!" && exit 1
 fi
 #安装相关依赖
 if [[ $os == "centos" ]];then
