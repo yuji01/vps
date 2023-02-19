@@ -14,7 +14,7 @@ if [[ $os == "centos" ]];then
   yum update
   rpm -qa|grep python3|xargs rpm -ev --allmatches --nodeps
   whereis python3 |xargs rm -frv
-  yum install wget yum-utils -y
+  yum install -y wget yum-utils make
   yum-builddep python3 -y
 else
   apt update
