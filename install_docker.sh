@@ -40,4 +40,4 @@ case $os in
 esac
 }
 check_os
-install_docker && echo "docker 安装完成" || echo "docker 安装失败"
+install_docker && echo -e "\e[1;32mdocker 安装完成\e[0m" || echo -e "\e[1;31mdocker 安装失败\e[0m"
