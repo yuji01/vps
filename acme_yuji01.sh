@@ -141,6 +141,7 @@ update_acme(){
 #花里胡哨的循环菜单
 while :;do
   echo -e "欢迎使用${OTHER}ナルト${END}开发的证书申请脚本"
+  echo
   echo -e "$OTHER功能如下：
   q -- 退出脚本
 ------------------------------------------
@@ -148,9 +149,9 @@ while :;do
   1 -- 安装 Acme 脚本
   2 -- 改变 CA 提供商
   3 -- 注册 Acme 账号
-  4 -- 使用 ipv4的 80 端口申请域名证书
-  5 -- 使用 ipv6的 80 端口申请域名证书
-  6 -- 使用Cloudflare API 申请域名证书
+  4 -- 使用 ipv4 的 80 端口申请域名证书
+  5 -- 使用 ipv6 的 80 端口申请域名证书
+  6 -- 使用 Cloudflare API 申请域名证书
   7 -- 设置 Acme 自动更新$END"
   read -n 1 -p "请选择：" menu
   case $menu in
