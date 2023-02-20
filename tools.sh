@@ -76,6 +76,7 @@ bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/install_python.sh)
 }
 
 while :;do
+echo -e "欢迎使用${OTHER}ナルト${END}开发的tools脚本"
 echo -e "${OTHER}
 菜单：
   ${RED}q  ---  退出脚本${END}
@@ -108,52 +109,36 @@ read -e -p "请输入：" INPUT
     q|Q)
       break;;
     1)
-      clear
       route_check;;
     2)
-      clear
       system_test;;
     3)
-      clear
       bbr;;
     4)
-      clear
       nf_check;;
     5)
-      clear
       media_check;;
     6)
-      clear
       warp;;
     7)
-      clear
       warp-go;;
     8)
-      clear
       ipv4_or_ipv6;;
     9)
-      clear
       acme;;
     10)
-      clear
       xui;;
     11)
-      clear
       xui_mod;;
     12)
-      clear
       hysteria;;
     13)
-      clear
       docker_install;;
     14)
-      clear
       xrayr;;
     15)
-      clear
       openai_check;;
     16)
-      clear
       install_python;;
     *)
       echo -e "${RED}请重新输入${END}"
