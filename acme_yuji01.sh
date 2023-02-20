@@ -1,6 +1,7 @@
 #!/bin/bash
 RED="\e[1;31m"
 GREEN="\e[1;32m"
+YELLOW="\e[1;33m"
 OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
 #安装脚本的路径
@@ -12,13 +13,27 @@ SSL='/ssl'
 #判断系统并安装相关的包
 check_system(){
 if [[ ! -z "`cat /etc/issue | grep -iE "debian"`" ]]; then
-  apt-get install socat -y
+  apt-get update -y && apt-get install -y socat lsof
 elif [[ ! -z "`cat /etc/issue | grep -iE "ubuntu"`" ]]; then
-  apt-get install socat -y
+  apt-get update -y && apt-get install -y socat lsof
 elif [[ ! -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]]; then
-  yum install socat -y
+  yum update -y && yum install -y socat lsof
 else
   echo -e "${RED}很抱歉，你的系统不受支持!" && exit 1
+fi
+}
+#检测80端口是否被占用
+check_port(){
+if [ -z `lsof -i:80` ];then
+  echo -e "${GREEN}80端口没被占用，可以继续申请域名${END}
+  但是要注意要${YELLOW}打开防火墙的80端口${END}哦"
+else
+  for i in {1..3};do
+    echo -e "${RED}80端口被占用了，请自行关闭占用80端口的程序，或者选择其他方式申请证书${END}"
+  done
+  echo -e "提示：
+  你可以使用${YELLOW} lsof -i:80 ${END}来查看占用80端口的程序"
+  exit 1
 fi
 }
 #安装acme脚本
@@ -60,16 +75,15 @@ change_ca(){
 }
 #注册acme账户
 register_acme(){
-  read -p "请输入你的Email地址：" input
+  read -e -p "请输入你的Email地址：" input
   $DIR/.acme.sh/acme.sh --register-account -m $input &&
   echo -e "${GREEN}注册成功$END" || echo -e "${RED}注册失败$END"
 }
 #使用ipv4的80端口申请证书
 80_acme_v4(){
   echo -e "${RED}请确保80端口没有被占用$END"
-#干掉占用80端口的程序
-kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'` &> /dev/null
-  read -p "请输入域名：" input
+  check_port
+  read -e -p "请输入域名：" input
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone
   if [ $? -eq 0 ];then
     echo -e "${GREEN}域名：$input 的证书申请成功$END" 
@@ -85,9 +99,8 @@ kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'` &> /dev/nu
 #使用ipv6的80端口申请证书
 80_acme_v6(){
   echo -e "${RED}请确保80端口没有被占用$END"
-#干掉占用80端口的程序
-kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'` &> /dev/null
-  read -p "请输入域名：" input
+  check_port
+  read -e -p "请输入域名：" input
   $DIR/.acme.sh/acme.sh  --issue -d $input --standalone --listen-v6
   if [ $? -eq 0 ];then
     echo -e "${GREEN}域名：$input 的证书申请成功$END" 
@@ -102,12 +115,13 @@ kill -9 `netstat -lnpt |grep 80|grep -oE '[0-9]+/'|grep -oE '[0-9]+'` &> /dev/nu
 }
 #使用cloudflare的api申请泛域名证书，貌似免费的域名不可用
 cf_api(){
-  echo -e "${RED}请确保cloudflare的API是生效的$END"
-  read -p "请输入cloudflare的API：" api
-  export CF_Key="$api"
+  echo -e "${YELLOW}免费的域名不可以用Cloudflare的api申请证书，比如 .cf .tk .ml .ga .gq 结尾的域名$END"
+  echo -e "${YELLOW}请确保cloudflare的API是生效的$END"
+  read -e -p "请输入你要申请的域名：" domain
   read -p "请输入cloudflare的邮箱：" email
   export CF_Email="$email"
-  read -p "请输入你要申请的域名：" domain
+  read -e -p "请输入cloudflare账户的API：" api
+  export CF_Key="$api"
   $DIR/.acme.sh/acme.sh --issue -d "$domain" -d "*.$domain" --dns dns_cf --ecc
   if [ $? -eq 0 ];then
     echo -e "${GREEN}域名：$domain 的证书申请成功$END" 
@@ -126,18 +140,21 @@ update_acme(){
 }
 #花里胡哨的循环菜单
 while :;do
+  echo "欢迎使用ナルト开发的证书申请脚本"
   echo -e "$OTHER功能如下：
-  0 -- 退出脚本
+  q -- 退出脚本
+------------------------------------------
+------------------------------------------
   1 -- 安装 Acme 脚本
   2 -- 改变 CA 提供商
   3 -- 注册 Acme 账号
-  4 -- 使用 ipv4的 80 端口申请证书
-  5 -- 使用 ipv6的 80 端口申请证书
-  6 -- 使用cloudflare API 申请泛域名证书
+  4 -- 使用 ipv4的 80 端口申请域名证书
+  5 -- 使用 ipv6的 80 端口申请域名证书
+  6 -- 使用Cloudflare API 申请域名证书
   7 -- 设置 Acme 自动更新$END"
   read -n 1 -p "请选择：" menu
   case $menu in
-    0)
+    q|Q)
       echo
       break;;
     1)
