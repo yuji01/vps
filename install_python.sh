@@ -18,7 +18,7 @@ if [[ $os == "centos" ]];then
   yum-builddep python3 -y
 else
   apt update
-  apt-get --purge remove python3 python3-pip -y
+  # apt-get --purge remove python3 python3-pip -y
   apt install wget build-essential libreadline-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev -y
 fi
 #安装主体
