@@ -2,6 +2,10 @@
 #缝合怪在此
 RED="\e[1;31m"
 GREEN="\e[1;32m"
+YELLOW="\e[1;33m"
+BLUE="\e[1;34m"
+PINK="\e[1;35m"
+QING="\e[1;36m"
 OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
 [ ! $UID -eq 0 ] && echo -e "$RED请以root用户运行！$END" && exit 1 
@@ -76,34 +80,30 @@ bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/install_python.sh)
 }
 
 while :;do
-echo -e "欢迎使用${OTHER}ナルト${END}开发的tools脚本"
-echo -e "${OTHER}
-菜单：
+echo -e "欢迎使用 ${OTHER}ナルト${END} 开发的tools脚本
+${OTHER}菜单：
   ${RED}q  ---  退出脚本${END}
 --------------------------------
---------------------------------
-  ${OTHER}1  ---  三网回程
+  ${YELLOW}1  ---  三网回程
   2  ---  系统测试
-  3  ---  bbr脚本
+  3  ---  bbr脚本${END}
 --------------------------------
-  4  ---  奈飞检测
-  5  ---  流媒体检测
+  ${BLUE}4  ---  奈飞检测
+  5  ---  流媒体检测${END}
 --------------------------------
-  6  ---  warp
+  ${PINK}6  ---  warp
   7  ---  warp-go
-  8  ---  检测网络优先级
+  8  ---  检测网络优先级${END}
 --------------------------------
-  9  ---  Acme 脚本
+  ${GREEN}9  ---  Acme 脚本
   10 ---  安装x-ui
   11 ---  安装魔改版x-ui
-  12 ---  安装hysteria
+  12 ---  安装hysteria${END}
 --------------------------------
-  13 ---  安装docker
+  ${QING}13 ---  安装docker
   14 ---  下载xrayr
   15 ---  Openai服务检测
-  16 ---  编译安装Python
-${END}
-"
+  16 ---  编译安装Python${END}"
 read -e -p "请输入：" INPUT
   case $INPUT in
     q|Q)
