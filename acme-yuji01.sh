@@ -162,7 +162,7 @@ acme_webroot(){
     *)
       web_html="/var/www/html"
   esac
-  echo -e "${YELLOW}验证的默认站点为：：$END ${RED}${web_html}$END"
+  echo -e "${YELLOW}验证的默认站点为：$END ${RED}${web_html}$END"
   read -e -p "请输入你要申请的域名：" domain
   $DIR/.acme.sh/acme.sh --issue -d $domain -k ec-256 --webroot $web_html
   install_cert
