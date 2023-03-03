@@ -83,7 +83,7 @@ bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/install_python.sh)
 while :;do
 echo -e "欢迎使用 ${OTHER}ナルト${END} 开发的tools脚本
 ${OTHER}菜单：
-  ${RED}q  ---  退出脚本${END}
+  ${RED}0  ---  退出脚本${END}
 --------------------------------
   ${YELLOW}1  ---  三网回程
   2  ---  系统测试
@@ -107,7 +107,7 @@ ${OTHER}菜单：
   16 ---  编译安装Python${END}"
 read -e -p "请输入：" INPUT
   case $INPUT in
-    q|Q)
+    0)
       break;;
     1)
       route_check;;
