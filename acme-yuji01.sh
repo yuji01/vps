@@ -221,9 +221,9 @@ while :;do
   4 -- 使用 ${PINK}ipv4 80 端口${END} 申请域名证书
   5 -- 使用 ${PINK}ipv6 80 端口${END} 申请域名证书
 - - - - - - - - - - - - - - - - - - - - - 
-  6 -- 使用 ${QING}nginx验证${END} 申请域名证书
-  7 -- 使用 ${QING}apache验证${END} 申请域名证书
-  8 -- 使用 ${QING}webroot${END} 申请域名证书
+  6 -- 使用 ${QING}Nginx验证${END} 申请域名证书
+  7 -- 使用 ${QING}Apache验证${END} 申请域名证书
+  8 -- 使用 ${QING}Webroot${END} 申请域名证书
 - - - - - - - - - - - - - - - - - - - - - 
   9 -- 使用 ${PINK}Cloudflare API${END} 申请域名证书
  10 -- 使用 ${PINK}手动验证dns记录${END} 申请域名证书
