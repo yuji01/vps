@@ -48,7 +48,8 @@ echo "请自行判断"
 }
 acme(){
 #证书申请
-bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/acme_yuji01.sh)
+#新版本
+bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/acme-yuji01.sh)
 }
 xui(){
 #原本xui
