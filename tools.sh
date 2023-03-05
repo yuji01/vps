@@ -104,7 +104,8 @@ ${OTHER}菜单：
   ${QING}13 ---  安装docker
   14 ---  下载xrayr
   15 ---  Openai服务检测
-  16 ---  编译安装Python${END}"
+  16 ---  编译安装Python
+  17 ---  设置虚拟内存${END}"
 read -e -p "请输入：" INPUT
   case $INPUT in
     0)
@@ -141,7 +142,9 @@ read -e -p "请输入：" INPUT
       openai_check;;
     16)
       install_python;;
-    *)
+    17)
+      bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/swap.sh);;
+     *)
       echo -e "${RED}请重新输入${END}"
   esac
 done
