@@ -2,6 +2,10 @@
 ```bash
 wget https://github.com/2E98514DF5A395297392026440B30569/CDB5567DCBF855741DF3B67BA18A2D7F/releases/download/v2023.2.25/tools && chmod +x tools && ./tools
 ```
+## 设置虚拟内存
+```bash
+bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/swap.sh)
+```
 # Tools脚本使用命令如下：
 ```bash
 bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/tools.sh)
