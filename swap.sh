@@ -1,13 +1,11 @@
 #! /bin/bash
 #设置虚拟内存
 if [ -d /usr/swap ];then
-  sw='on'
   # 取消挂载
   swapoff /usr/swap/swapfile
   # 删除文件
   rm -rf /usr/swap/swapfile
 else
-  sw='off'
   mkdir /usr/swap
 fi
 
@@ -22,7 +20,6 @@ chmod 0600 /usr/swap/swapfile &&
 swapon /usr/swap/swapfile &&
 # 查看内存
 free -m
-# 设置开机自启
-# 新建的才写入
-if [ $sw -eq "off" ] && echo '/usr/swap/swapfile swap swap defaults 0 0' >> /etc/fstab
-echo -e "\e[1;32m设置完成\e[0m"
+# 设置开机自启 新建的才写入
+[ -z "`cat /etc/fstab|grep 'swapfile'`" ] && echo '/usr/swap/swapfile swap swap defaults 0 0' >> /etc/fstab
+echo -e "\e[1;32m设置完成，虚拟内存为 $size M\e[0m"
