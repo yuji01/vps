@@ -21,5 +21,5 @@ swapon /usr/swap/swapfile &&
 # 查看内存
 free -m
 # 设置开机自启 新建的才写入
-[ -z "`cat /etc/fstab|grep 'swapfile'`" ] && echo '/usr/swap/swapfile swap swap defaults 0 0' >> /etc/fstab
+[ -z "`cat /etc/fstab|grep '/usr/swap/swapfile'`" ] && echo '/usr/swap/swapfile swap swap defaults 0 0' >> /etc/fstab
 echo -e "\e[1;32m设置完成，虚拟内存为 $size M\e[0m"
