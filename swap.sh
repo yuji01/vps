@@ -12,10 +12,10 @@ fi
 read -e -p "输入虚拟内存大小（M）：" size
 dd if=/dev/zero of=/usr/swap/swapfile bs=1M count=$size &&
 du -sh /usr/swap/swapfile &&
-# 格式化为swap
-mkswap /usr/swap/swapfile &&
 # 设置权限
 chmod 0600 /usr/swap/swapfile &&
+# 格式化为swap
+mkswap /usr/swap/swapfile &&
 # 挂载swap
 swapon /usr/swap/swapfile &&
 # 查看内存
