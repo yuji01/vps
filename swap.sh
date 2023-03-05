@@ -1,6 +1,16 @@
 #! /bin/bash
-# 设置虚拟内存
-[ -d /usr/swap ] || mkdir /usr/swap
+#设置虚拟内存
+if [ -d /usr/swap ];then
+  sw='on'
+  # 取消挂载
+  swapoff /usr/swap/swapfile
+  # 删除文件
+  rm -rf /usr/swap/swapfile
+else
+  sw='off'
+  mkdir /usr/swap
+fi
+
 read -e -p "输入虚拟内存大小（M）：" size
 dd if=/dev/zero of=/usr/swap/swapfile bs=1M count=$size &&
 du -sh /usr/swap/swapfile &&
@@ -13,5 +23,6 @@ swapon /usr/swap/swapfile &&
 # 查看内存
 free -m
 # 设置开机自启
-echo '/usr/swap/swapfile swap swap defaults 0 0' >> /etc/fstab
+# 新建的才写入
+if [ $sw -eq "off" ] && echo '/usr/swap/swapfile swap swap defaults 0 0' >> /etc/fstab
 echo -e "\e[1;32m设置完成\e[0m"
