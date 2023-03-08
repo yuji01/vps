@@ -204,7 +204,7 @@ acme_dns_manual_mode(){
 
 #设置acme脚本自动更新
 acme_update(){
-  $DIR/.acme.sh/acme.sh  --upgrade  --auto-upgrade && echo -e "${GREEN}自动更新设置完成$END"
+  $DIR/.acme.sh/acme.sh --upgrade --auto-upgrade && echo -e "${GREEN}自动更新设置完成$END"
 }
 #花里胡哨的循环菜单
 while :;do
@@ -271,7 +271,7 @@ while :;do
       install_cert_manual;;
     12)
       echo
-      update_acme;;
+      acme_update;;
     *)
       echo
       echo -e "${RED}请重新输入$END"
