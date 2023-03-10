@@ -202,12 +202,11 @@ acme_dns_manual_mode(){
 }
 
 remove_cert(){
-  echo "请输入你要移除证书的域名"
+  echo -e "$YELLOW请输入你要移除证书的域名$END"
   read -e -p "请输入域名：" domain
-  $DIR/.acme.sh/acme.sh --revoke -d $domain &&
-  $DIR/.acme.sh/acme.sh --remove -d $domain &&
-  rm -rf $SSL/$domain &&
-  rm -rf $DIR/.acme.sh/$domain* &&
+  $DIR/.acme.sh/acme.sh --revoke -d $domain && $DIR/.acme.sh/acme.sh --remove -d $domain &&
+  rm -rf $SSL/$domain
+  rm -rf $DIR/.acme.sh/$domain*
   [ $? -eq 0 ] && echo -e "$GREEN移除证书成功！$END" || echo -e "$RED移除失败！$END"
 }
 
