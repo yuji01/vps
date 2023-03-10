@@ -113,7 +113,7 @@ else
   done
   echo -e "提示：
   可使用${YELLOW} lsof -i:80 ${END}查看占用80端口的程序"
-  break
+  exit 1
 fi
 }
 
