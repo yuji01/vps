@@ -5,7 +5,7 @@ backup(){
     backup_path="/backup/$file"
     [ -d $backup_path ] || mkdir $backup_path -p
     # 删除7天前的文件
-    find $backup_path/* -type f -mtime +7 -exec rm -rf {}\;
+    find $backup_path/* -type f -mtime +7 -exec sh rm -rf {} \;
     # 源文件的路径
     dir="/docker/"
     # 备份文件的命名
