@@ -5,7 +5,7 @@ src_dir="/docker/"
 backup_path="/backup/$1"
 backup_name=`date  +"%Y-%m-%d_%H.%M.%S"`
 onedrive_path="/backup-vps/$1"
-
+# 通知设置
 feishu_url="https://open.feishu.cn/open-apis/bot/v2/hook/741a60c0-78ee-4d49-bb14-db4296595a6b"
 backup_file=$1
 success_info(){
@@ -24,12 +24,10 @@ fi
 # 删除7天前的文件
 find $backup_path/* -type f -mtime +7 -exec sh rm -rf {} \;
 tar -zcf ${backup_path}/${backup_name}.tar.gz -C $src_dir $1
-
 # 复制备份文件到onerive
 [ -d $onedrive_path ] || mkdir $onedrive_path -p
 cp ${backup_path}/${backup_name}.tar.gz $onedrive_path/
 # 删除本机的备份文件
-
 if [ -e $onedrive_path/${backup_name}.tar.gz ]; then
     rm ${backup_path}/${backup_name}.tar.gz && success_info
 else
