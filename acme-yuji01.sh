@@ -109,11 +109,10 @@ if [ -z `lsof -i:80` ];then
   但是要注意要${YELLOW}打开防火墙的80端口${END}哦"
 else
   for i in {1..3};do
-    echo -e "${RED}80端口被占用，请关闭占用程序，或选择其他方式申请证书${END}"
+    echo -e "${RED}80端口疑似被占用，很大可能会申请失败，可选择其他方式申请证书${END}"
   done
   echo -e "提示：
   可使用${YELLOW} lsof -i:80 ${END}查看占用80端口的程序"
-  exit 1
 fi
 }
 
