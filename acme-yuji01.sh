@@ -45,16 +45,16 @@ change_ca(){
   read -n 1 -p "请输入数字：" input
   case $input in
     1)
-      $DIR/.acme.sh/acme.sh --set-default-ca --server letsencrypt &&
+      $DIR/.acme.sh/acme.sh --set-default-ca --server letsencrypt && register_acme &&
       echo -e "CA已经切换为：${GREEN}Let's Encrypt$END" || echo -e "${RED}CA切换失败$END";;
     2)
-      $DIR/.acme.sh/acme.sh --set-default-ca --server buypass &&
+      $DIR/.acme.sh/acme.sh --set-default-ca --server buypass && register_acme &&
       echo -e "CA已经切换为：${GREEN}Buypass$END" || echo -e "${RED}CA切换失败$END";;
     3)
-      $DIR/.acme.sh/acme.sh --set-default-ca --server ssl.com &&
+      $DIR/.acme.sh/acme.sh --set-default-ca --server ssl.com && register_acme &&
       echo -e "CA已经切换为：${GREEN}SSL.com$END" || echo -e "${RED}CA切换失败$END";;
     4)
-      $DIR/.acme.sh/acme.sh --set-default-ca --server zerossl &&
+      $DIR/.acme.sh/acme.sh --set-default-ca --server zerossl && register_acme &&
       echo -e "CA已经切换为：${GREEN}zerossl$END" || echo -e "${RED}CA切换失败$END";;
     *)
       echo -e "${RED}请重新输入$END"
