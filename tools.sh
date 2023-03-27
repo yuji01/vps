@@ -83,6 +83,7 @@ change_timezone(){
 # 修改时区为上海
 rm -rf /etc/localtime &&
 ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&
+echo "Asia/Shanghai" > /etc/timezone &&
 echo -e "$GREEN修改时区成功$END"
 date
 }
