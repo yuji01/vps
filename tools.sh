@@ -79,6 +79,13 @@ install_python(){
 #安装python
 bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/install_python.sh)
 }
+change_timezone(){
+# 修改时区为上海
+rm -rf /etc/localtime &&
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&
+echo -e "$GREEN修改时区成功$END"
+}
+
 
 while :;do
 echo -e "欢迎使用 ${OTHER}ナルト${END} 开发的tools脚本
@@ -105,7 +112,8 @@ ${OTHER}菜单：
   14 ---  下载xrayr
   15 ---  Openai服务检测
   16 ---  编译安装Python
-  17 ---  设置虚拟内存${END}"
+  17 ---  设置虚拟内存
+  18 --- 修改时区为上海${END}"
 read -e -p "请输入：" INPUT
   case $INPUT in
     0)
@@ -143,7 +151,9 @@ read -e -p "请输入：" INPUT
     16)
       install_python;;
     17)
-      bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/swap.sh);;
+      bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/swap.sh);; 
+    18)
+      change_timezone;;
      *)
       echo -e "${RED}请重新输入${END}"
   esac
