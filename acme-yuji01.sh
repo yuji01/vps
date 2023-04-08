@@ -162,14 +162,26 @@ acme_cf_api(){
   1. 默认是申请泛域名证书
   2. 以 .cf .tk .ml .ga .gq 结尾的域名不可申请
   3. 输入的域名不用加*，例如：\"narutos.eu.org\"
-  4. 请确保cloudflare的API是生效的$END"
+  4. 请确保cloudflare的API是生效的
+  5. 建议用\"Global API Key\" $END"
   read -e -p "请输入你要申请的域名：" domain
   read -p "请输入cloudflare的邮箱：" cloudflare_email
   export CF_Email="$cloudflare_email"
   read -e -p "请输入cloudflare账户的API：" cloudflare_api
   export CF_Key="$cloudflare_api"
-  $DIR/.acme.sh/acme.sh --dns dns_cf --issue -d *.$domain -d $domain
-  install_cert
+  $DIR/.acme.sh/acme.sh --dns dns_cf --issue -d "*.$domain" -d $domain --debug
+# 安装泛域名证书
+  [ -d $SSL/$domain ] || mkdir -p $SSL/$domain
+  $DIR/.acme.sh/acme.sh --installcert -d *.$domain --fullchain-file $SSL/$domain/cret.crt --key-file $SSL/$domain/private.key &&
+  #给申请的证书赋予可读权限
+  chmod +r $SSL/$domain/cret.crt && chmod +r $SSL/$domain/private.key &&
+  if [ $? -eq 0 ];then
+  echo -e "证书安装路径：
+  泛域名证书公钥路径：${GREEN}$SSL/$domain/cret.crt$END
+  泛域名证书私钥路径：${RED}$SSL/$domain/private.key$END"
+  else
+    echo -e "${RED}泛域名：$domain 的证书安装失败$END"
+  fi
 }
 acme_dns_manual_mode(){
 #使用dns手动验证方式申请证书
@@ -192,7 +204,10 @@ remove_cert(){
 # 删除证书
   echo -e "$YELLOW请输入你要移除证书的域名$END"
   read -e -p "请输入域名：" domain
-  $DIR/.acme.sh/acme.sh --revoke -d $domain && $DIR/.acme.sh/acme.sh --remove -d $domain &&
+  $DIR/.acme.sh/acme.sh --revoke -d *.$domain
+  $DIR/.acme.sh/acme.sh --remove -d *.$domain
+  $DIR/.acme.sh/acme.sh --revoke -d $domain &&
+  $DIR/.acme.sh/acme.sh --remove -d $domain &&
   rm -rf $SSL/$domain
   rm -rf $DIR/.acme.sh/$domain*
   [ $? -eq 0 ] && echo -e "$GREEN移除证书成功！$END" || echo -e "$RED移除失败！$END"
