@@ -25,18 +25,16 @@ else
   echo -e "${RED}很抱歉，你的系统不受支持!" && exit 1
 fi
 }
-
-#安装acme脚本
 install_acme(){
+#安装acme脚本
   echo -e "${RED}Acme脚本默认安装在${DIR}$END"
   check_system &&
   cd $DIR
   curl https://get.acme.sh | sh
   [ -f $DIR/.acme.sh/acme.sh ] && echo -e "${GREEN}安装成功$END" || echo -e "${RED}安装失败$END"
 }
-
-#改变ca提供商
 change_ca(){
+#改变ca提供商
   echo -e "默认使用 ZeroSSL，可切换的CA提供商如下：
   1  ---  Let's Encrypt
   2  ---  Buypass
@@ -60,16 +58,14 @@ change_ca(){
       echo -e "${RED}请重新输入$END"
   esac
 }
-
-#设置域名提醒账户
 register_acme(){
+#设置域名提醒账户
   read -e -p "请输入你的Email地址：" email
   $DIR/.acme.sh/acme.sh --register-account -m $email &&
   echo -e "${GREEN}账户设置成功$END" || echo -e "${RED}账户设置成功$END"
 }
-
-#安装申请好的证书
 install_cert(){
+#安装申请好的证书
   if [ $? -eq 0 ];then
     echo -e "${GREEN}域名：$domain 的证书申请成功$END"
     #文件夹不存在就创建它
@@ -84,9 +80,8 @@ install_cert(){
     echo -e "${RED}域名：$domain 的证书申请失败$END"
   fi
 }
-
-#手动安装证书
 install_cert_manual(){
+#手动安装证书
  read -e -p "请输入域名：" domain
  #文件夹不存在就创建它
   [ -d $SSL/$domain ] || mkdir -p $SSL/$domain
@@ -101,9 +96,8 @@ install_cert_manual(){
     echo -e "${RED}域名：$domain 的证书安装失败$END"
   fi
 }
-
-#检测80端口是否被占用
 check_port(){
+#检测80端口是否被占用
 if [ -z `lsof -i:80` ];then
   echo -e "${GREEN}80端口没被占用，可以继续申请域名${END}
   但是要注意要${YELLOW}打开防火墙的80端口${END}哦"
@@ -115,43 +109,38 @@ else
   可使用${YELLOW} lsof -i:80 ${END}查看占用80端口的程序"
 fi
 }
-
-
-#使用ipv4的80端口申请证书
 acme_v4_80(){
+#使用ipv4的80端口申请证书
   echo -e "${YELLOW}请确保80端口没有被占用$END"
   check_port
   read -e -p "请输入域名：" domain
   $DIR/.acme.sh/acme.sh  --issue -d $domain --standalone
   install_cert
 }
-#使用ipv6的80端口申请证书
 acme_v6_80(){
+#使用ipv6的80端口申请证书
   echo -e "${YELLOW}请确保80端口没有被占用$END"
   check_port
   read -e -p "请输入域名：" domain
   $DIR/.acme.sh/acme.sh  --issue -d $domain --standalone --listen-v6
   install_cert
 }
-
-#使用nginx申请证书
 acme_nginx(){
+#使用nginx模式申请证书
   echo -e "${YELLOW}这种方法需要运行Nginx$END"
   read -e -p "请输入你要申请的域名：" domain
-  $DIR/.acme.sh/acme.sh --issue  -d $domain --nginx
+  $DIR/.acme.sh/acme.sh --issue --nginx -d $domain
   install_cert
 }
-
-#使用apache申请证书
 acme_apache(){
+#使用apache申请证书
   echo -e "${YELLOW}这种方法需要运行Apache$END"
   read -e -p "请输入你要申请的域名：" domain
-  $DIR/.acme.sh/acme.sh --issue  -d $domain --apache
+  $DIR/.acme.sh/acme.sh --issue --apache -d $domain
   install_cert
 }
-
-#使用webroot申请证书
 acme_webroot(){
+#使用webroot申请证书
   echo -e "${YELLOW}这种方式需要配置web服务器$END"
   echo -e "${YELLOW}验证的默认html站点为：${END} ${RED}/var/www/html${END}"
   echo -e "是否修改站点？请输入${RED}y/n${END}"
@@ -164,27 +153,26 @@ acme_webroot(){
   esac
   echo -e "${YELLOW}验证的默认站点为：$END ${RED}${web_html}$END"
   read -e -p "请输入你要申请的域名：" domain
-  $DIR/.acme.sh/acme.sh --issue -d $domain -k ec-256 --webroot $web_html
+  $DIR/.acme.sh/acme.sh --issue -d $domain -w $web_html
   install_cert
 }
-
-
-#使用cloudflare的api申请泛域名证书，免费的域名不可用
 acme_cf_api(){
-  echo -e "${YELLOW}免费的域名不可以用Cloudflare的api申请证书，比如 .cf .tk .ml .ga .gq 结尾的域名$END"
-  echo -e "${YELLOW}请确保cloudflare的API是生效的$END"
+#使用cloudflare的api申请泛域名证书
+  echo -e "${YELLOW}提示：
+  1. 默认是申请泛域名证书
+  2. 以 .cf .tk .ml .ga .gq 结尾的域名不可申请
+  3. 输入的域名不用加*，例如：\"narutos.eu.org\"
+  4. 请确保cloudflare的API是生效的$END"
   read -e -p "请输入你要申请的域名：" domain
   read -p "请输入cloudflare的邮箱：" cloudflare_email
   export CF_Email="$cloudflare_email"
   read -e -p "请输入cloudflare账户的API：" cloudflare_api
   export CF_Key="$cloudflare_api"
-  $DIR/.acme.sh/acme.sh --issue -d "$domain" --dns dns_cf
+  $DIR/.acme.sh/acme.sh --dns dns_cf --issue -d *.$domain -d $domain
   install_cert
 }
-
-
-#使用dns手动验证方式申请证书
 acme_dns_manual_mode(){
+#使用dns手动验证方式申请证书
   echo -e "${YELLOW}这种方式需要手动去添加txt记录进行验证$END"
   read -e -p "请输入你要申请的域名：" domain
   $DIR/.acme.sh/acme.sh --issue --dns -d $domain --yes-I-know-dns-manual-mode-enough-go-ahead-please
@@ -200,8 +188,8 @@ acme_dns_manual_mode(){
   esac
   install_cert
 }
-
 remove_cert(){
+# 删除证书
   echo -e "$YELLOW请输入你要移除证书的域名$END"
   read -e -p "请输入域名：" domain
   $DIR/.acme.sh/acme.sh --revoke -d $domain && $DIR/.acme.sh/acme.sh --remove -d $domain &&
@@ -209,9 +197,8 @@ remove_cert(){
   rm -rf $DIR/.acme.sh/$domain*
   [ $? -eq 0 ] && echo -e "$GREEN移除证书成功！$END" || echo -e "$RED移除失败！$END"
 }
-
-#设置acme脚本自动更新
 acme_update(){
+#设置acme脚本自动更新
   $DIR/.acme.sh/acme.sh --upgrade --auto-upgrade && echo -e "${GREEN}自动更新设置完成$END"
 }
 #花里胡哨的循环菜单
@@ -229,9 +216,9 @@ while :;do
   4 -- 使用 ${PINK}ipv4 80 端口${END} 申请域名证书
   5 -- 使用 ${PINK}ipv6 80 端口${END} 申请域名证书
 - - - - - - - - - - - - - - - - - - - - - 
-  6 -- 使用 ${QING}Nginx验证${END} 申请域名证书
-  7 -- 使用 ${QING}Apache验证${END} 申请域名证书
-  8 -- 使用 ${QING}Webroot${END} 申请域名证书
+  6 -- 使用 ${QING}Webroot${END} 申请域名证书
+  7 -- 使用 ${QING}Nginx验证${END} 申请域名证书
+  8 -- 使用 ${QING}Apache验证${END} 申请域名证书
 - - - - - - - - - - - - - - - - - - - - - 
   9 -- 使用 ${PINK}Cloudflare API${END} 申请域名证书
  10 -- 使用 ${PINK}手动验证dns记录${END} 申请域名证书
@@ -262,13 +249,13 @@ while :;do
       acme_v6_80;;
     6)
       echo
-      acme_nginx;;
+      acme_webroot;;
     7)
       echo
-      acme_apache;;
+      acme_nginx;;
     8)
       echo
-      acme_webroot;;
+      acme_apache;;
     9)
       echo
       acme_cf_api;;
