@@ -220,7 +220,7 @@ while :;do
   7 -- 使用 ${QING}Nginx验证${END} 申请域名证书
   8 -- 使用 ${QING}Apache验证${END} 申请域名证书
 - - - - - - - - - - - - - - - - - - - - - 
-  9 -- 使用 ${PINK}Cloudflare API${END} 申请域名证书
+  9 -- 使用 ${PINK}Cloudflare API${END} 申请泛域名证书
  10 -- 使用 ${PINK}手动验证dns记录${END} 申请域名证书
 ------------------------------------------
 其他设置部分：
