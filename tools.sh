@@ -21,6 +21,8 @@ bbr(){
 #开启bbr
 [ ! -e `pwd`/tcp.sh ] && wget -N --no-check-certificate "https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh"
 chmod +x tcp.sh && ./tcp.sh
+# 新脚本wget --no-check-certificate -O tcpx.sh https://raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master/tcpx.sh
+
 }
 nf_check(){
 #奈飞解锁
