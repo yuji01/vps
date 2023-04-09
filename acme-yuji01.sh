@@ -169,7 +169,7 @@ acme_cf_api(){
   export CF_Email="$cloudflare_email"
   read -e -p "请输入cloudflare账户的API：" cloudflare_api
   export CF_Key="$cloudflare_api"
-  $DIR/.acme.sh/acme.sh --dns dns_cf --issue -d "*.$domain" -d $domain --debug
+  $DIR/.acme.sh/acme.sh --dns dns_cf --issue -d "*.$domain" -d $domain
 # 安装泛域名证书
   [ -d $SSL/$domain ] || mkdir -p $SSL/$domain
   $DIR/.acme.sh/acme.sh --installcert -d *.$domain --fullchain-file $SSL/$domain/cret.crt --key-file $SSL/$domain/private.key &&
