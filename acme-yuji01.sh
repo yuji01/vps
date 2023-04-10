@@ -202,6 +202,7 @@ acme_dns_manual_mode(){
 }
 remove_cert(){
 # 删除证书
+  ls $SSL
   echo -e "$YELLOW请输入你要移除证书的域名$END"
   read -e -p "请输入域名：" domain
   $DIR/.acme.sh/acme.sh --revoke -d *.$domain
