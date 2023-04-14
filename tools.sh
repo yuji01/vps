@@ -13,10 +13,12 @@ route_check(){
 #线路检测
 curl https://raw.githubusercontent.com/zhanghanyun/backtrace/main/install.sh -sSf | sh
 }
+
 system_test(){
 #系统测试
 bash <(wget -qO- --no-check-certificate https://gitlab.com/spiritysdx/za/-/raw/main/ecs.sh)
 }
+
 bbr(){
 #开启bbr
 #[ ! -e `pwd`/tcp.sh ] && wget -N --no-check-certificate "https://raw.githubusercontent.com/chiakge/Linux-NetSpeed/master/tcp.sh"
@@ -26,15 +28,11 @@ bbr(){
 [ ! -e `pwd`/tcpx.sh ] && wget --no-check-certificate -O tcpx.sh https://raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master/tcpx.sh
 chmod +x tcpx.sh && ./tcpx.sh
 }
-nf_check(){
-#奈飞解锁
-[ ! -e `pwd`/nf ] && wget -O nf https://github.com/sjlleo/netflix-verify/releases/download/v3.1.0-1/nf_linux_amd64
-chmod +x nf && ./nf
+check_unlock(){
+#解锁检测
+bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/check_unlock.sh)
 }
-media_check(){
-#流媒体检测
-bash <(curl -L -s check.unlock.media)
-}
+
 warp-go(){
 #warp-go
 [ ! -e `pwd`/warp-go.sh ] && wget -N https://raw.githubusercontent.com/fscarmen/warp/main/warp-go.sh
@@ -50,6 +48,7 @@ ipv4_or_ipv6(){
 curl ip.sb
 echo "请自行判断"
 }
+
 acme(){
 #证书申请
 #新版本
@@ -75,13 +74,13 @@ xrayr(){
 #下载xrayr
 git clone https://github.com/XrayR-project/XrayR-release ./xrayr
 }
-openai_check(){
-#检测vps是否支持使用openai的服务
-bash <(curl -Ls https://cpp.li/openai)
-}
 install_python(){
 #安装python
 bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/install_python.sh)
+}
+set_swap(){
+#虚拟内存
+bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/swap.sh)
 }
 change_timezone(){
 # 修改时区为上海
@@ -100,26 +99,23 @@ ${OTHER}菜单：
 --------------------------------
   ${YELLOW}1  ---  三网回程
   2  ---  系统测试
-  3  ---  bbr脚本${END}
+  3  ---  bbr脚本
+  4  ---  解锁检测${END}
 --------------------------------
-  ${BLUE}4  ---  奈飞检测
-  5  ---  流媒体检测${END}
+  ${PINK}5  ---  warp
+  6  ---  warp-go
+  7  ---  检测网络优先级${END}
 --------------------------------
-  ${PINK}6  ---  warp
-  7  ---  warp-go
-  8  ---  检测网络优先级${END}
+  ${GREEN}8  ---  Acme 脚本
+  9 ---  安装x-ui
+ 10 ---  安装魔改版x-ui
+ 11 ---  安装hysteria${END}
 --------------------------------
-  ${GREEN}9  ---  Acme 脚本
-  10 ---  安装x-ui
-  11 ---  安装魔改版x-ui
-  12 ---  安装hysteria${END}
---------------------------------
-  ${QING}13 ---  安装docker
-  14 ---  下载xrayr
-  15 ---  Openai服务检测
-  16 ---  编译安装Python
-  17 ---  设置虚拟内存
-  18 --- 修改时区为上海${END}"
+ ${QING}12 ---  安装docker
+ 13 ---  下载xrayr
+ 14 ---  编译安装Python
+ 15 ---  设置虚拟内存
+ 16 ---  修改时区为上海${END}"
 read -e -p "请输入：" INPUT
   case $INPUT in
     0)
@@ -131,34 +127,30 @@ read -e -p "请输入：" INPUT
     3)
       bbr;;
     4)
-      nf_check;;
+      check_unlock;;
     5)
-      media_check;;
-    6)
       warp;;
-    7)
+    6)
       warp-go;;
-    8)
+    7)
       ipv4_or_ipv6;;
-    9)
+    8)
       acme;;
-    10)
+    9)
       xui;;
-    11)
+    10)
       xui_mod;;
-    12)
+    11)
       hysteria;;
-    13)
+    12)
       docker_install;;
-    14)
+    13)
       xrayr;;
-    15)
-      openai_check;;
-    16)
+    14)
       install_python;;
-    17)
-      bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/swap.sh);; 
-    18)
+    15)
+      set_swap;; 
+    16)
       change_timezone;;
      *)
       echo -e "${RED}请重新输入${END}"
