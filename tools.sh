@@ -93,7 +93,7 @@ date
 
 
 while :;do
-echo -e "欢迎使用 ${OTHER}ナルト${END} 开发的tools脚本
+echo -e "欢迎使用 ${OTHER}ナルト${END} 编写的tools脚本
 ${OTHER}菜单：
   ${RED}0  ---  退出脚本${END}
 --------------------------------
