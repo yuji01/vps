@@ -20,7 +20,7 @@ bash <(curl -L -s check.unlock.media)
 }
 openai_check(){
 #openai检测
-bash <(curl -Ls https://cpp.li/openai)
+bash <(curl -Ls https://cdn.jsdelivr.net/gh/missuo/OpenAI-Checker/openai.sh)
 }
 while :;do
 echo -e "
