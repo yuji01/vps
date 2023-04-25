@@ -9,6 +9,7 @@ END="\e[0m"
 
 #安装证书的路径
 SSL='/ssl'
+cd /acme.sh || exit 1
 register_acme(){
 #设置域名提醒账户
   read  -p "请输入你的Email地址：" email
