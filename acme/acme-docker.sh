@@ -4,12 +4,16 @@ GREEN="\e[1;32m"
 YELLOW="\e[1;33m"
 PINK="\e[1;35m"
 QING="\e[1;36m"
-OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
 
 #安装证书的路径
 SSL='/ssl'
-cd /acme.sh || exit 1
+cd /acme.sh 
+if [ $? -ne 0 ];then
+  echo -e "${RED}进入路径失败，程序退出！${END}"
+  exit 1
+fi
+
 register_acme(){
 #设置域名提醒账户
   read  -p "请输入你的Email地址：" email
