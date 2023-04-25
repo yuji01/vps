@@ -14,3 +14,7 @@ bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/tools.sh)
 ```bash
 curl -O https://raw.githubusercontent.com/yuji01/vps/main/auto-trojan_go.sh && chmod +x auto-trojan_go.sh && ./auto-trojan_go.sh
 ```
+acme-docker脚本
+```sh
+sh <(curl https://raw.githubusercontent.com/yuji01/vps/main/acme/acme-docker.sh)
+```
