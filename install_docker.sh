@@ -38,8 +38,14 @@ case $os in
     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo &&
     yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 esac
+# 安装docker-compose
+if [ $? -eq 0 ];then
+  curl -L https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&
+  chmod +x /usr/local/bin/docker-compose
+fi
 }
 change_config(){
+#修改docker配置文件
 cat > /etc/docker/daemon.json <<\EOF
 {
     "log-driver": "json-file",
@@ -55,10 +61,12 @@ cat > /etc/docker/daemon.json <<\EOF
 EOF
 }
 start_docker(){
+# 设置docker重启
 systemctl enable docker.socket
 systemctl enable docker
 systemctl restart docker
 }
+#执行
 check_os
 install_docker &&
 change_config &&
