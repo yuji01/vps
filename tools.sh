@@ -64,7 +64,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/insta
 }
 hysteria(){
 #hysteria协议
-bash <(curl -fsSL https://git.io/hysteria.sh)
+# bash <(curl -fsSL https://git.io/hysteria.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/emptysuns/Hi_Hysteria/main/server/install.sh)
 }
 docker_install(){
 #安装官方docker
