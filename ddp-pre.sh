@@ -1,5 +1,6 @@
 # !/bin/bash
 # ddp重装系统后的预处理命令
+# 重装系统建议用Debian 10、Ubuntu 20.04，Debian 11和Ubuntu的22.04都有点毛病
 
 nezha(){
 #安装哪吒的命令
