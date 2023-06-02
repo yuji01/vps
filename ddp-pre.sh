@@ -1,8 +1,10 @@
 # !/bin/bash
 # ddp重装系统后的预处理命令
 
+nezha(){
 #安装哪吒的命令
-nezha="curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent api.nezha.vps.yuji2022.eu.org 5555 69a7debabbe1114f33"
+curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent api.nezha.vps.yuji2022.eu.org 5555 69a7debabbe1114f33
+}
 # 停止apache
 systemctl stop apache2
 systemctl stop apache
