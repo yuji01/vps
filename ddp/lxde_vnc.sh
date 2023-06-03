@@ -26,7 +26,9 @@ export XKL_XMODMAP_DISABLE=1
 lxterminal &
 /usr/bin/lxsession -s LXDE & " > ~/.vnc/xstartup
 
-read -e -p "是否安装中文支持及火狐浏览器？Y/n  " INPUT
+
+echo "是否安装中文支持及火狐浏览器？Y/n"
+read -e -p "请输入：" INPUT
 case $INPUT in
   Y|y) 
     echo "将安装firefox和中文支持"
@@ -40,6 +42,7 @@ case $INPUT in
   *)
     echo "不会安装firefox和中文支持"
 esac
-tightvncserver :1
-echo "VNC已经启动完成，关闭使用 tightvncserver -kill :1 "
+tightvncserver :1 && echo "VNC已经启动完成"
+echo "连接端口为 5901 "
+echo "关闭使用 tightvncserver -kill :1 "
 echo "-------安装完成 祝您搞机愉快-------"
