@@ -26,10 +26,10 @@ export XKL_XMODMAP_DISABLE=1
 lxterminal &
 /usr/bin/lxsession -s LXDE & " > ~/.vnc/xstartup
 
-read -e -p "是否安装中文支持及火狐浏览器？Y/n" INPUT
+read -e -p "是否安装中文支持及火狐浏览器？Y/n  " INPUT
 case $INPUT in
   Y|y) 
-    echo "安装firefox和中文支持"
+    echo "将安装firefox和中文支持"
     apt-get install iceweasel -y
     apt-get install lxde -y
     apt-get install ttf-arphic-uming -y
