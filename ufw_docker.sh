@@ -38,7 +38,40 @@ COMMIT
 # END UFW AND DOCKER
 EOF
 [ $? -eq 0 ] && echo "Write configuration complete"
+[ $? -eq 0 ] && systemctl restart ufw && echo "Restart ufw is complete, please enjoy it :)"
+}
+
+enable_port(){
+read -e -p "tcp/udp? " protocol
+read -e -p "port: " port
+ufw route allow proto $protocol from any to any port $port
+}
+
+delete_port(){
+ufw status numbered &
+read -e -p "num: " num
+ufw delete $num
+}
+
+menu(){
+echo "Menu：
+0.exit
+1.ufw_docker
+2.enable port
+3.delete enable port"
+read -e -p "choose: " INPUT
+case $INPUT in
+  0)
+    break;;
+  1)
+    change_ufw;;
+  2)
+    enable_port;;
+  3)
+    delete_port;;
+  *)
+    echo "please enter again"
+esac
 }
 check_os
-change_ufw
-[ $? -eq 0 ] && systemctl restart ufw && echo "Restart ufw is complete, please enjoy it :)"
+menu
