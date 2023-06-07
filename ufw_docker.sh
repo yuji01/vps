@@ -1,13 +1,14 @@
 # !/bin/bash
 check_os(){
   if [[ ! -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]]; then
-    echo -e "Sorry, your system is not supported!" && exit 1
+    echo "Sorry, your system is not supported!" && exit 1
+  elif [ `ufw --version &> /dev/null` -ne 0 ];then
+    echo "ufw is not installed, this script cannot be used" && exit 1
   fi
 }
 change_ufw(){
-echo "Please go to https://github.com/chaifeng/ufw-docker for details"
-echo "The file will be written to /etc/ufw/after.rules"
-ufw --version &> /dev/null &&
+  echo "Please go to https://github.com/chaifeng/ufw-docker for details"
+  echo "The file will be written to /etc/ufw/after.rules"
 cat >> /etc/ufw/after.rules <<\EOF
 # BEGIN UFW AND DOCKER
 *filter
@@ -37,20 +38,20 @@ cat >> /etc/ufw/after.rules <<\EOF
 COMMIT
 # END UFW AND DOCKER
 EOF
-[ $? -eq 0 ] && echo "Write configuration complete"
-[ $? -eq 0 ] && systemctl restart ufw && echo "Restart ufw is complete, please enjoy it :)"
+  [ $? -eq 0 ] && echo "Write configuration complete"
+  [ $? -eq 0 ] && systemctl restart ufw && echo "Restart ufw is complete, please enjoy it :)"
 }
 
 enable_port(){
-read -e -p "tcp/udp? " protocol
-read -e -p "port: " port
-ufw route allow proto $protocol from any to any port $port
+  read -e -p "tcp/udp? " protocol
+  read -e -p "port: " port
+  ufw route allow proto $protocol from any to any port $port
 }
 
 delete_port(){
-ufw status numbered &
-read -e -p "num: " num
-ufw delete $num
+  ufw status numbered
+  read -e -p "num: " num
+  ufw delete $num
 }
 
 menu(){
