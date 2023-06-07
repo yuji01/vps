@@ -91,6 +91,9 @@ echo "Asia/Shanghai" > /etc/timezone &&
 echo -e "$GREEN修改时区成功$END"
 date
 }
+ufw_docker(){
+bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/ufw_docker.sh)
+}
 
 
 while :;do
@@ -116,7 +119,8 @@ ${OTHER}菜单：
  13  ---  下载xrayr
  14  ---  编译安装Python
  15  ---  设置虚拟内存
- 16  ---  修改时区为上海${END}"
+ 16  ---  修改时区为上海
+ 17  ---  修复ufw_docker的漏洞${END}"
 read -e -p "请输入：" INPUT
   case $INPUT in
     0)
@@ -153,6 +157,8 @@ read -e -p "请输入：" INPUT
       set_swap;; 
     16)
       change_timezone;;
+    17)
+      ufw_docker;;
      *)
       echo -e "${RED}请重新输入${END}"
   esac
