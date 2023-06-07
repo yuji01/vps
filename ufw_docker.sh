@@ -37,7 +37,7 @@ cat >> /etc/ufw/after.rules <<\EOF
 COMMIT
 # END UFW AND DOCKER
 EOF
-&& echo "done"
 }
 check_os
 change_ufw
+[ $? -eq 0 ] && systemctl restart ufw && echo "done"
