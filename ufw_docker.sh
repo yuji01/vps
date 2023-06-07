@@ -6,7 +6,7 @@ check_os(){
   fi
 }
 change_ufw(){
-# see https://github.com/chaifeng/ufw-docker
+# https://github.com/chaifeng/ufw-docker
 ufw --version &> /dev/null &&
 cat >> /etc/ufw/after.rules <<\EOF
 # BEGIN UFW AND DOCKER
@@ -36,7 +36,8 @@ cat >> /etc/ufw/after.rules <<\EOF
 
 COMMIT
 # END UFW AND DOCKER
-EOF && echo "done"
+EOF
+&& echo "done"
 }
 check_os
 change_ufw
