@@ -1,12 +1,12 @@
 # !/bin/bash
 check_os(){
-#系统检测
   if [[ ! -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]]; then
-    echo -e "很抱歉，你的系统不受支持!" && exit 1
+    echo -e "Sorry, your system is not supported!" && exit 1
   fi
 }
 change_ufw(){
-# https://github.com/chaifeng/ufw-docker
+echo "Please go to https://github.com/chaifeng/ufw-docker for details"
+echo "The file will be written to /etc/ufw/after.rules"
 ufw --version &> /dev/null &&
 cat >> /etc/ufw/after.rules <<\EOF
 # BEGIN UFW AND DOCKER
@@ -37,7 +37,8 @@ cat >> /etc/ufw/after.rules <<\EOF
 COMMIT
 # END UFW AND DOCKER
 EOF
+[ $? -eq 0 ] && echo "Write configuration complete"
 }
 check_os
 change_ufw
-[ $? -eq 0 ] && systemctl restart ufw && echo "done"
+[ $? -eq 0 ] && systemctl restart ufw && echo "Restart ufw is complete, please enjoy it :)"
