@@ -1,14 +1,15 @@
 # !/bin/bash
 check_os(){
   if [[ ! -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]]; then
-    echo "Sorry, your system is not supported!" && exit 1
+    echo "抱歉，不支持您的系统！" && exit 1
   elif [ `ufw --version &> /dev/null` -ne 0 ];then
-    echo "ufw is not installed, this script cannot be used" && exit 1
+    echo "ufw 未安装，无法使用此脚本！" && exit 1
   fi
 }
-change_ufw(){
-  echo "Please go to https://github.com/chaifeng/ufw-docker for details"
-  echo "The file will be written to /etc/ufw/after.rules"
+
+write_ufw(){
+  echo "详情请前往 https://github.com/chaifeng/ufw-docker"
+  echo "该文件将写入 /etc/ufw/after.rules"
 cat >> /etc/ufw/after.rules <<\EOF
 # BEGIN UFW AND DOCKER
 *filter
@@ -38,40 +39,40 @@ cat >> /etc/ufw/after.rules <<\EOF
 COMMIT
 # END UFW AND DOCKER
 EOF
-  [ $? -eq 0 ] && echo "Write configuration complete"
-  [ $? -eq 0 ] && systemctl restart ufw && echo "Restart ufw is complete, please enjoy it :)"
+  [ $? -eq 0 ] && echo "写入配置完成"
+  [ $? -eq 0 ] && systemctl restart ufw && echo "重启ufw完成，请尽情享受吧:)"
 }
 
-enable_port(){
-  read -e -p "tcp/udp? " protocol
-  read -e -p "port: " port
-  ufw route allow proto $protocol from any to any port $port
+open_port(){
+  read -e -p "请选择协议：tcp/udp/other？" protocol
+  read -e -p "请输入要开放的端口：" port
+  ufw route allow proto $protocol from any to any port $port && echo "开放 $protocol 协议的 $port 完成"
 }
 
-delete_port(){
-  ufw status numbered
-  read -e -p "num: " num
-  ufw delete $num
+close_port(){
+  read -e -p "请选择协议：tcp/udp/other？" protocol
+  read -e -p "请输入要关闭的端口：" port
+  ufw delete allow proto $protocol from any to any port $port && echo "关闭 $protocol 协议的 $port 完成"
 }
 
 menu(){
-echo "Menu：
-0.exit
-1.ufw_docker
-2.enable port
-3.delete enable port"
-read -e -p "choose: " INPUT
+echo "菜单：
+ 0 -- 退出脚本
+ 1 -- 修复ufw_docker
+ 2 -- 开放docker容器端口
+ 3 -- 关闭docker容器端口"
+read -e -p "请输入：" INPUT
 case $INPUT in
   0)
     break;;
   1)
-    change_ufw;;
+    write_ufw;;
   2)
-    enable_port;;
+    open_port;;
   3)
-    delete_port;;
+    close_port;;
   *)
-    echo "please enter again"
+    echo "输入错误，请重新输入"
 esac
 }
 check_os
