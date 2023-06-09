@@ -30,8 +30,8 @@ for ((i=range_1; i<=range_2; i++)); do
   grep -E -o "([0-9]{1,3}\.){3}[0-9]{1,3}" result.txt | sort -t. -k3,3n -k4,4n | uniq > ip.txt
   
   for ip_ad in $(sed -n 'p' ip.txt); do
-    res1=$(curl "http://${ip_ad}:54321/login"  --max-time 5 --data-raw 'username=admin&password=admin' --compressed  --insecure)
-    res2=$(curl "https://${ip_ad}:54321/login" --max-time 5 --data-raw 'username=admin&password=admin' --compressed  --insecure)
+    res1=$(curl "http://${ip_ad}:54321/login"  --max-time 10 --data-raw 'username=admin&password=admin' --compressed  --insecure)
+    res2=$(curl "https://${ip_ad}:54321/login" --max-time 10 --data-raw 'username=admin&password=admin' --compressed  --insecure)
     if [[ "$res1" =~ .*true.* ]]; then
         echo $ip_ad | tee >> week.log
     fi
@@ -44,5 +44,5 @@ for ((i=range_1; i<=range_2; i++)); do
 done
 
 echo -e "执行完成，${GREEN}week.log${END}是可登录的机器，${YELLOW}all.log${END}是改了密码的机器"
-echo -e "可登录的ip如下："
+echo -e "${QING}可登录的ip如下：${END}"
 cat week.log | uniq
