@@ -12,10 +12,16 @@ QING="\e[1;36m"
 OTHER="\e[1;$[RANDOM%7+31]m"
 END="\e[0m"
 
-# 定义扫描的参数
-ip='66.152' # 前两段ip地址
-range_1='169' # 第三段ip地址开始
-range_2='170' # 第三段ip地址范围
+
+# ip='66.152' # 前两段ip地址
+echo -e "请输入前两段ip地址，格式 ${YELLOW}66.152$END.1.1"
+read -e -p "请输入：" ip
+# range_1='169' # 第三段ip地址开始
+echo -e "请输入第三段ip开始地址，格式 66.152.${YELLOW}50$END.1"
+read -e -p "请输入：" range_1
+# range_2='170' # 第三段ip地址范围
+echo -e "请输入第三段ip结束地址，格式 66.152.${YELLOW}60$END.1"
+read -e -p "请输入：" range_2
 
 # 删除文件
 rm -rf result.txt week.log all.log 
