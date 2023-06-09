@@ -19,7 +19,7 @@ check_os(){
 
 write_ufw(){
   echo -e "${YELLOW}详情请前往 https://github.com/chaifeng/ufw-docker 了解${END}"
-  echo -e "${YELLOW}该文件将写入 /etc/ufw/after.rules${END}"
+  echo -e "${YELLOW}配置将写入 /etc/ufw/after.rules${END}"
 if grep -q -F "# BEGIN UFW AND DOCKER" /etc/ufw/after.rules && grep -q -F "# END UFW AND DOCKER" /etc/ufw/after.rules; then
     echo -e "${RED}/etc/ufw/after.rules 存在 ufw_docker 的规则，程序退出${END}" && exit 0
 else
