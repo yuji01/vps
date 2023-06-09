@@ -12,6 +12,10 @@ check_os(){
 write_ufw(){
   echo "详情请前往 https://github.com/chaifeng/ufw-docker"
   echo "该文件将写入 /etc/ufw/after.rules"
+if grep -q -F "# BEGIN UFW AND DOCKER" /etc/ufw/after.rules && grep -q -F "# END UFW AND DOCKER" /etc/ufw/after.rules; then
+    echo "/etc/ufw/after.rules 存在 ufw_docker 的规则，程序退出" && exit 0
+else
+    echo "/etc/ufw/after.rules 不存在 ufw_docker 的规则，将写入规则…"
 cat >> /etc/ufw/after.rules <<\EOF
 # BEGIN UFW AND DOCKER
 *filter
@@ -41,6 +45,8 @@ cat >> /etc/ufw/after.rules <<\EOF
 COMMIT
 # END UFW AND DOCKER
 EOF
+fi
+
   [ $? -eq 0 ] && echo "写入配置完成"
   [ $? -eq 0 ] && systemctl restart ufw && echo "重启ufw完成，请尽情享受吧:)"
 }
