@@ -1,21 +1,29 @@
 # !/bin/bash
+RED="\e[1;31m"
+GREEN="\e[1;32m"
+YELLOW="\e[1;33m"
+BLUE="\e[1;34m"
+PINK="\e[1;35m"
+QING="\e[1;36m"
+OTHER="\e[1;$[RANDOM%7+31]m"
+END="\e[0m"
 check_os(){
   if [[ ! -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]]; then
-    echo "抱歉，不支持您的系统！" && exit 1
+    echo -e "${RED}抱歉，不支持您的系统！${END}" && exit 1
   fi
   ufw --version
   if [ $? -ne 0 ];then
-    echo "ufw 未安装，无法使用此脚本！" && exit 1
+    echo -e "${RED}ufw 未安装，无法使用此脚本！${END}" && exit 1
   fi
 }
 
 write_ufw(){
-  echo "详情请前往 https://github.com/chaifeng/ufw-docker"
-  echo "该文件将写入 /etc/ufw/after.rules"
+  echo -e "${YELLOW}详情请前往 https://github.com/chaifeng/ufw-docker 了解${END}"
+  echo -e "${YELLOW}该文件将写入 /etc/ufw/after.rules${END}"
 if grep -q -F "# BEGIN UFW AND DOCKER" /etc/ufw/after.rules && grep -q -F "# END UFW AND DOCKER" /etc/ufw/after.rules; then
-    echo "/etc/ufw/after.rules 存在 ufw_docker 的规则，程序退出" && exit 0
+    echo -e "${RED}/etc/ufw/after.rules 存在 ufw_docker 的规则，程序退出${END}" && exit 0
 else
-    echo "/etc/ufw/after.rules 不存在 ufw_docker 的规则，将写入规则…"
+    echo -e "${GREEN}/etc/ufw/after.rules 不存在 ufw_docker 的规则，将写入规则…${END}"
 cat >> /etc/ufw/after.rules <<\EOF
 # BEGIN UFW AND DOCKER
 *filter
@@ -47,28 +55,28 @@ COMMIT
 EOF
 fi
 
-  [ $? -eq 0 ] && echo "写入配置完成"
-  [ $? -eq 0 ] && systemctl restart ufw && echo "重启ufw完成，请尽情享受吧:)"
+  [ $? -eq 0 ] && echo -e "${GREEN}写入配置完成${END}"
+  [ $? -eq 0 ] && systemctl restart ufw && echo -e "${GREEN}重启ufw完成，请尽情享受吧:)${END}"
 }
 
 open_port(){
   read -e -p "请选择协议：tcp/udp/other？" protocol
   read -e -p "请输入要开放的端口：" port
-  ufw route allow proto $protocol from any to any port $port && echo "开放 $protocol 协议的 $port 完成"
+  ufw route allow proto $protocol from any to any port $port && echo -e "${GREEN}开放 $protocol 协议的 $port 完成${END}"
 }
 
 close_port(){
   read -e -p "请选择协议：tcp/udp/other？" protocol
   read -e -p "请输入要关闭的端口：" port
-  ufw delete allow proto $protocol from any to any port $port && echo "关闭 $protocol 协议的 $port 完成"
+  ufw delete allow proto $protocol from any to any port $port && echo -e "${GREEN}关闭 $protocol 协议的 $port 完成${END}"
 }
 
 menu(){
-echo "菜单：
+echo -e "${OTHER}菜单：
  0 -- 退出脚本
  1 -- 修复ufw_docker
  2 -- 开放docker容器端口
- 3 -- 关闭docker容器端口"
+ 3 -- 关闭docker容器端口${END}"
 read -e -p "请输入：" INPUT
 case $INPUT in
   0)
@@ -80,7 +88,7 @@ case $INPUT in
   3)
     close_port;;
   *)
-    echo "输入错误，请重新输入"
+    echo -e "${RED}输入错误，请重新输入${END}"
 esac
 }
 check_os
