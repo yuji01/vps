@@ -2,7 +2,9 @@
 check_os(){
   if [[ ! -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]]; then
     echo "抱歉，不支持您的系统！" && exit 1
-  elif [ `ufw --version &> /dev/null` -ne 0 ];then
+  fi
+  ufw --version
+  if [ $? -ne 0 ];then
     echo "ufw 未安装，无法使用此脚本！" && exit 1
   fi
 }
