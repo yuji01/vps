@@ -44,10 +44,9 @@ for ((i=range_1; i<=range_2; i++)); do
     if [[ "$res2" =~ .*true.* ]]; then
         echo $ip_ad | tee >> week.log
     fi
-    sort -u week.log -o week.log #文件去重操作
   done;
 done
-
 echo -e "执行完成，${GREEN}week.log${END}是可登录的机器，${YELLOW}ip.txt${END}是改了密码的机器"
 echo -e "${QING}可登录的ip如下：${END}"
+sort -u week.log -o week.log #文件去重操作
 cat week.log | uniq
