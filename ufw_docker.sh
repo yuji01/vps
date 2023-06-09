@@ -75,8 +75,8 @@ menu(){
 echo -e "${OTHER}菜单：
  0 -- 退出脚本
  1 -- 修复ufw_docker
- 2 -- 开放docker容器端口
- 3 -- 关闭docker容器端口${END}"
+ 2 -- 允许外部网络访问 Docker 容器提供的服务
+ 3 -- 删除外部网络访问 Docker 容器提供的服务${END}"
 read -e -p "请输入：" INPUT
 case $INPUT in
   0)
