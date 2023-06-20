@@ -36,8 +36,13 @@ for ((i=range_1; i<=range_2; i++)); do
   grep -E -o "([0-9]{1,3}\.){3}[0-9]{1,3}" result.txt | sort -t. -k3,3n -k4,4n | uniq > ip.txt
   
   for ip_ad in $(sed -n 'p' ip.txt); do
-    res1=$(curl "http://${ip_ad}:54321/login"  --max-time 10 --data-raw 'username=admin&password=admin' --compressed  --insecure)
-    res2=$(curl "https://${ip_ad}:54321/login" --max-time 10 --data-raw 'username=admin&password=admin' --compressed  --insecure)
+
+# 旧写法curl
+#    res1=$(curl "http://${ip_ad}:54321/login"  --max-time 10 --data-raw 'username=admin&password=admin' --compressed  --insecure)
+#    res2=$(curl "https://${ip_ad}:54321/login" --max-time 10 --data-raw 'username=admin&password=admin' --compressed  --insecure)
+# 新写法curl
+    res1=$(curl --request POST --data 'username=admin&password=admin' "http://${ip_ad}:54321/login" --insecure --max-time 10)
+    res2=$(curl --request POST --data 'username=admin&password=admin' "https://${ip_ad}:54321/login" --insecure --max-time 10)
     if [[ "$res1" =~ .*true.* ]]; then
         echo $ip_ad | tee >> week.log
     fi
