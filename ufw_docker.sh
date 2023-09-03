@@ -62,17 +62,19 @@ fi
 open_port(){
   read -e -p "请选择协议：tcp/udp/other？" protocol
   read -e -p "请输入要开放的端口：" port
-  ufw route allow proto $protocol from any to any port $port && echo -e "${GREEN}开放 $protocol 协议的 $port 完成${END}"
+  ufw route allow proto $protocol from any to any port $port && 
+  echo -e "${GREEN}开放 $protocol 协议的 $port 完成${END}"
 }
 
 close_port(){
   read -e -p "请选择协议：tcp/udp/other？" protocol
   read -e -p "请输入要关闭的端口：" port
-  ufw delete allow proto $protocol from any to any port $port && echo -e "${GREEN}关闭 $protocol 协议的 $port 完成${END}"
+  ufw delete allow proto $protocol from any to any port $port && 
+  echo -e "${GREEN}关闭 $protocol 协议的 $port 完成${END}"
 }
 
 menu(){
-echo "host网络类型直接用ufw allow xxx放行，端口映射模式开放/关闭需要用2/3"
+echo -e "${YELLOW} host网络类型直接用ufw allow xxx放行，端口映射模式开放/关闭需要用2/3${END}"
 echo -e "${OTHER}菜单：
  0 -- 退出脚本
  1 -- 修复ufw_docker
