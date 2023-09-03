@@ -74,7 +74,7 @@ close_port(){
 }
 
 menu(){
-echo -e "${YELLOW} host网络类型直接用ufw allow xxx放行，端口映射模式开放/关闭需要用2/3${END}"
+echo -e "${YELLOW} host网络类型直接用ufw allow xxx放行，端口映射模式(-p) 开放/关闭需要用2/3${END}"
 echo -e "${OTHER}菜单：
  0 -- 退出脚本
  1 -- 修复ufw_docker
