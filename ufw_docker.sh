@@ -60,15 +60,13 @@ fi
 }
 
 open_port(){
-  read -e -p "请选择协议：tcp/udp/other？" protocol
-  read -e -p "请输入要开放的端口：" port
+  read -e -p "请输入"协议 端口"（例如 "tcp 3389"）" protocol port
   ufw route allow proto $protocol from any to any port $port && 
   echo -e "${GREEN}开放 $protocol 协议的 $port 完成${END}"
 }
 
 close_port(){
-  read -e -p "请选择协议：tcp/udp/other？" protocol
-  read -e -p "请输入要关闭的端口：" port
+  read -e -p "请输入"协议 端口"（例如 "tcp 3389"）" protocol port
   ufw delete allow proto $protocol from any to any port $port && 
   echo -e "${GREEN}关闭 $protocol 协议的 $port 完成${END}"
 }
