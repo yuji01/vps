@@ -40,7 +40,7 @@ bash warp-go.sh [option] [lisence]
 }
 warp(){
 #warp
-[ ! -e `pwd`/menu.sh ] && wget -N https://raw.githubusercontent.com/fscarmen/warp/main/menu.sh
+[ ! -e `pwd`/menu.sh ] && wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh?ref_type=heads
 bash menu.sh [option] [lisence]
 }
 ipv4_or_ipv6(){
