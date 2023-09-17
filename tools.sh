@@ -35,12 +35,12 @@ bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/check_unlock.sh)
 
 warp-go(){
 #warp-go
-[ ! -e `pwd`/warp-go.sh ] && wget -N https://gitlab.com/fscarmen/warp/-/raw/main/warp-go.sh?ref_type=heads
+[ ! -e `pwd`/warp-go.sh ] && wget -N https://gitlab.com/fscarmen/warp/-/raw/main/warp-go.sh
 bash warp-go.sh [option] [lisence]
 }
 warp(){
 #warp
-[ ! -e `pwd`/menu.sh ] && wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh?ref_type=heads
+[ ! -e `pwd`/menu.sh ] && wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh
 bash menu.sh [option] [lisence]
 }
 ipv4_or_ipv6(){
