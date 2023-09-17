@@ -35,7 +35,7 @@ bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/check_unlock.sh)
 
 warp-go(){
 #warp-go
-[ ! -e `pwd`/warp-go.sh ] && wget -N https://raw.githubusercontent.com/fscarmen/warp/main/warp-go.sh
+[ ! -e `pwd`/warp-go.sh ] && wget -N https://gitlab.com/fscarmen/warp/-/raw/main/warp-go.sh?ref_type=heads
 bash warp-go.sh [option] [lisence]
 }
 warp(){
