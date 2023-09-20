@@ -40,7 +40,7 @@ case $os in
 esac
 # 安装docker-compose
 if [ $? -eq 0 ];then
-  curl -L https://github.com/docker/compose/releases/download/latest/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&
+  curl -L https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&
   chmod +x /usr/local/bin/docker-compose
 fi
 }
