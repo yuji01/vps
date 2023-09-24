@@ -213,6 +213,12 @@ remove_cert(){
   rm -rf $DIR/.acme.sh/$domain*
   [ $? -eq 0 ] && echo -e "$GREEN移除证书成功！$END" || echo -e "$RED移除失败！$END"
 }
+
+update_ssl_all(){
+# 更新全部证书
+  $DIR/.acme.sh/acme.sh --renew-all
+}
+
 acme_update(){
 #设置acme脚本自动更新
   $DIR/.acme.sh/acme.sh --upgrade --auto-upgrade && echo -e "${GREEN}自动更新设置完成$END"
@@ -242,7 +248,8 @@ while :;do
 其他设置部分：
  ${GREEN}11 -- 手动安装证书
  12 -- 移除证书
- 13 -- 设置 Acme 自动更新$END"
+ 13 -- 更新全部证书
+ 14 -- 设置 Acme 自动更新$END"
   read -e -p "请选择：" menu
   case $menu in
     0)
@@ -285,6 +292,9 @@ while :;do
       echo
       remove_cert;;
     13)
+      echo
+      update_ssl_all;;
+    14)
       echo
       acme_update;;
     *)
