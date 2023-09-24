@@ -219,6 +219,14 @@ update_ssl_all(){
   $DIR/.acme.sh/acme.sh --renew-all
 }
 
+update_ssl_domain(){
+# 更新单个证书
+  echo -e "$YELLOW请输入你要更新证书的域名$END"
+  read -e -p "请输入域名：" domain
+  $DIR/.acme.sh/acme.sh --renew -d $domain
+  [ $? -eq 0 ] && echo -e "$GREEN更新证书成功！$END" || echo -e "$RED更新证书失败！$END"
+}
+
 acme_update(){
 #设置acme脚本自动更新
   $DIR/.acme.sh/acme.sh --upgrade --auto-upgrade && echo -e "${GREEN}自动更新设置完成$END"
@@ -249,7 +257,8 @@ while :;do
  ${GREEN}11 -- 手动安装证书
  12 -- 移除证书
  13 -- 更新全部证书
- 14 -- 设置 Acme 自动更新$END"
+ 14 -- 更新单个证书
+ 15 -- 设置 Acme 自动更新$END"
   read -e -p "请选择：" menu
   case $menu in
     0)
@@ -295,6 +304,9 @@ while :;do
       echo
       update_ssl_all;;
     14)
+      echo
+      update_ssl_domain;;
+    15)
       echo
       acme_update;;
     *)
