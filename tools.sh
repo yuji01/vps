@@ -95,6 +95,10 @@ ufw_docker(){
 bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/ufw_docker.sh)
 }
 
+log_size(){
+bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/journalctl_size.sh)
+}
+
 
 while :;do
 echo -e "欢迎使用 ${OTHER}ナルト${END} 编写的tools脚本
@@ -120,7 +124,8 @@ ${OTHER}菜单：
  14  ---  编译安装Python
  15  ---  设置虚拟内存
  16  ---  修改时区为上海
- 17  ---  修复ufw_docker的漏洞${END}"
+ 17  ---  设置日志大小
+ 18  ---  修复ufw_docker的漏洞${END}"
 read -e -p "请输入：" INPUT
   case $INPUT in
     0)
@@ -158,6 +163,8 @@ read -e -p "请输入：" INPUT
     16)
       change_timezone;;
     17)
+      log_size;;
+    18)
       ufw_docker;;
      *)
       echo -e "${RED}请重新输入${END}"
