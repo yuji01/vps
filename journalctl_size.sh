@@ -1,4 +1,7 @@
 #! /bin/bash
+
+journalctl --disk-usage
+
 read -e -p "请输入日志的大小 单位M：" SIZE
 cat > /etc/systemd/journald.conf <<EOF
 SystemMaxUse=${SIZE}M
