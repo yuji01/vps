@@ -54,10 +54,14 @@ install_docker(){
 
 }
 change_config(){
-# 禁用 journald 日志驱动
+# 减少 journald 日志驱动
 cat > /etc/docker/daemon.json <<\EOF
 {
-    "log-driver": "none"
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "1m",
+        "max-file": "2"
+    }
 }
 EOF
 # 禁用 docker buildx 插件，避免构建相关的开销
