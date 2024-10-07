@@ -70,6 +70,7 @@ mv /usr/libexec/docker/cli-plugins/docker-buildx /usr/libexec/docker/cli-plugins
 }
 start_docker(){
 # 设置docker重启
+systemctl daemon-reload
 systemctl enable docker.socket
 systemctl enable docker
 systemctl restart docker
