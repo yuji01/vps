@@ -69,7 +69,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/emptysuns/Hi_Hysteria/main/ser
 }
 docker_install(){
 #安装官方docker
-bash <(curl https://raw.githubusercontent.com/yuji01/vps/refs/heads/main/install_docker/install_docker.sh)
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/refs/heads/main/install_docker/install.sh)
 }
 xrayr(){
 #下载xrayr
