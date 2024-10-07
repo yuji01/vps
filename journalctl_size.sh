@@ -23,8 +23,11 @@ systemctl restart systemd-journald
 if [[ "$user_input" == "y" || "$user_input" == "Y" ]]; then
     # 删除所有超过 1 秒的日志
     journalctl --vacuum-time=1s
+    # 强制删除日志文件
+    rm -rf /var/log/journal/*
 fi
 
 echo "设置完成，当前日志使用情况： 
 $(journalctl --disk-usage)"
+
 #systemctl kill --kill-who=main --signal=SIGUSR2 systemd-journald.service
