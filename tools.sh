@@ -30,7 +30,7 @@ chmod +x tcpx.sh && ./tcpx.sh
 }
 check_unlock(){
 #解锁检测
-bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/check_unlock.sh)
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/main/check_unlock.sh)
 }
 
 warp-go(){
@@ -52,7 +52,7 @@ echo "请自行判断"
 acme(){
 #证书申请
 #新版本
-bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/acme-yuji01.sh)
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/main/acme-yuji01.sh)
 }
 xui(){
 #原本xui
@@ -77,11 +77,11 @@ git clone https://github.com/XrayR-project/XrayR-release ./xrayr
 }
 install_python(){
 #安装python
-bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/install_python.sh)
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/main/install_python.sh)
 }
 set_swap(){
 #虚拟内存
-bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/swap.sh)
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/main/swap.sh)
 }
 change_timezone(){
 # 修改时区为上海
@@ -92,11 +92,11 @@ echo -e "$GREEN修改时区成功$END"
 date
 }
 ufw_docker(){
-bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/ufw_docker.sh)
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/main/ufw_docker.sh)
 }
 
 log_size(){
-bash <(curl https://raw.githubusercontent.com/yuji01/vps/main/journalctl_size.sh)
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/main/journalctl_size.sh)
 }
 
 
