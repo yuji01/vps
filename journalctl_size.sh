@@ -1,5 +1,18 @@
 #! /bin/bash
 
+RED="\e[1;31m"
+GREEN="\e[1;32m"
+YELLOW="\e[1;33m"
+BLUE="\e[1;34m"
+PINK="\e[1;35m"
+QING="\e[1;36m"
+OTHER="\e[1;$[RANDOM%7+31]m"
+END="\e[0m"
+
+echo "运行时间： $(date "+%Y-%m-%d %H:%M:%S")"
+echo -e "当前日志使用情况： 
+${YELLOW}$(journalctl --disk-usage)${END}"
+
 read -e -p "请输入 系统日志可以使用的最大磁盘空间 单位M：" SystemMaxUse
 read -e -p "请输入 单个日志文件的最大大小 单位M：" SystemMaxFileSize
 read -e -p "请输入 在内存中存储的临时日志的最大空间 单位M：" RuntimeMaxUse
@@ -27,7 +40,7 @@ if [[ "$user_input" == "y" || "$user_input" == "Y" ]]; then
     rm -rf /var/log/journal/*
 fi
 
-echo "设置完成，当前日志使用情况： 
-$(journalctl --disk-usage)"
+echo -e "设置完成，当前日志使用情况： 
+${GREEN}$(journalctl --disk-usage)${END}"
 
 #systemctl kill --kill-who=main --signal=SIGUSR2 systemd-journald.service
