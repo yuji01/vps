@@ -62,6 +62,7 @@ EOF
 }
 start_docker(){
 # 设置docker重启
+systemctl daemon-reload
 systemctl enable docker.socket
 systemctl enable docker
 systemctl restart docker
