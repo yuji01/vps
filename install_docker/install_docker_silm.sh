@@ -1,5 +1,12 @@
 #! /bin/bash
 # 安装官方docker，精简版
+# docker-ce：Docker 守护进程，提供容器管理和运行的核心功能。
+# docker-ce-cli：Docker 的命令行工具，允许用户通过命令与 Docker 守护进程交互。
+# containerd.io：一个容器运行时，负责实际的容器执行和管理，Docker 使用它作为底层的容器引擎。
+
+# docker-buildx-plugin 和 docker-compose-plugin 是 Docker 的两个插件，分别扩展了 Docker 的构建和编排功能。
+# 它们不是 Docker 的核心部分，但为构建多架构镜像和管理多容器应用提供了强大的功能。
+
 check_os(){
 #系统检测
   if [[ ! -z "`cat /etc/issue | grep -iE "debian"`" ]]; then
@@ -44,17 +51,18 @@ install_docker(){
       curl -L https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose &&
       chmod +x /usr/local/bin/docker-compose
     fi
-    # 修改配置
-    mv /usr/libexec/docker/cli-plugins/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx.disabled
 
 }
 change_config(){
-#修改docker配置文件
+# 禁用 journald 日志驱动
 cat > /etc/docker/daemon.json <<\EOF
 {
     "log-driver": "none"
 }
 EOF
+# 禁用 docker buildx 插件，避免构建相关的开销
+mv /usr/libexec/docker/cli-plugins/docker-buildx /usr/libexec/docker/cli-plugins/docker-buildx.disabled
+
 }
 start_docker(){
 # 设置docker重启
