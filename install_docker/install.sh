@@ -13,12 +13,12 @@ END="\e[0m"
 
 install_docker(){
 # 完整版docker
-curl https://raw.githubusercontent.com/yuji01/vps/refs/heads/main/install_docker/install_docker.sh -sSf | sh
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/refs/heads/main/install_docker/install_docker.sh)
 }
 
 install_docker_silm(){
 # 精简版docker
-curl https://raw.githubusercontent.com/yuji01/vps/refs/heads/main/install_docker/install_docker_silm.sh -sSf | sh
+bash <(curl -s https://raw.githubusercontent.com/yuji01/vps/refs/heads/main/install_docker/install_docker_silm.sh)
 }
 
 while :;do
