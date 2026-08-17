@@ -1,4 +1,5 @@
 #!/bin/bash
+# 搬瓦工流量查询脚本
 # apt-get install -y curl jq bc
 # ================= 配置区域 =================
 # https://kiwivm.64clouds.com/auth-login
